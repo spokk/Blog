@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
+const checkAuth = require('../../middleware/check-auth');
 
 //Load User model
 const User = require('../../models/User');
@@ -11,7 +12,7 @@ const User = require('../../models/User');
 // @route GET api/users/test
 // @desc Tests users route
 // @access Public
-router.get('/test', (req, res) => res.json({ response: 'users works' }));
+router.get('/test', checkAuth, (req, res) => res.json({ response: 'users works' }));
 
 // @route GET api/users/register
 // @desc Register users
@@ -60,12 +61,12 @@ router.post('/login', (req, res) => {
       if (isMatch) {
         // User Matched
 
-        const payload = { id: user.id, name: user.name }; //JWT payload
+        const payload = { id: user.id, name: user.name, email: user.email }; //JWT payload
 
         // Sign Token
-        jwt.sign(payload, keys.secretKey, { expiresIn: '1d' }, (err, token) => {
+        jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
           res.json({
-            seccess: true,
+            success: true,
             token: 'Bearer ' + token
           });
         });
@@ -79,8 +80,7 @@ router.post('/login', (req, res) => {
 // @route GET api/users/users
 // @desc Return all users
 // @access Private
-//passport.authenticate('jwt', { session: false }),
-router.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/users', checkAuth, (req, res) => {
   res.json({ id: req.user.id, name: req.user.name, email: req.user.email });
 });
 
