@@ -91,4 +91,29 @@ router.post('/like/:id', checkAuth, (req, res) => {
   });
 });
 
+// @route POST api/posts/unlike/:id
+// @desc Unlike post by id
+// @access Private
+router.post('/unlike/:id', checkAuth, (req, res) => {
+  User.findOne({ user: req.user.id }).then(user => {
+    Post.findById(req.params.id)
+      .then(post => {
+        if (post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
+          return res.status(400).json({ like: 'You have not liked this post yet' });
+        }
+
+        //Get remove index
+        const removeIndex = post.likes.map(item => item.user.toString()).indexOf(req.user.id);
+
+        //Splice out of array
+        post.likes.splice(removeIndex, 1);
+
+        post.save().then(post => res.json(post));
+      })
+      .catch(err => {
+        res.status(404).json({ post: 'Post not found' });
+      });
+  });
+});
+
 module.exports = router;
