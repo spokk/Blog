@@ -54,10 +54,10 @@ router.get('/:id', (req, res) => {
 });
 
 // @route DELETE api/posts/:id
-// @desc Get post by id
+// @desc Delete post by id
 // @access Private
 router.delete('/:id', checkAuth, (req, res) => {
-  User.findOne({ _id: req.user.id }).then(user => {
+  User.findOne({ user: req.user.id }).then(user => {
     Post.findById(req.params.id)
       .then(post => {
         if (post.user.toString() !== req.user.id) {
@@ -66,6 +66,26 @@ router.delete('/:id', checkAuth, (req, res) => {
 
         // Delete post
         post.remove().then(() => res.json({ success: true }));
+      })
+      .catch(err => res.status(404).json({ post: 'Post not found' }));
+  });
+});
+
+// @route POST api/posts/like/:id
+// @desc Like post by id
+// @access Private
+router.post('/like/:id', checkAuth, (req, res) => {
+  User.findOne({ user: req.user.id }).then(user => {
+    Post.findById(req.params.id)
+      .then(post => {
+        if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
+          return res.status(400).json({ like: 'User already liked this post' });
+        }
+
+        // Add user id to likes array
+        post.likes.unshift({ user: req.user.id });
+
+        post.save().then(post => res.json(post));
       })
       .catch(err => res.status(404).json({ post: 'Post not found' }));
   });
