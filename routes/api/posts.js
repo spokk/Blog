@@ -116,4 +116,33 @@ router.post('/unlike/:id', checkAuth, (req, res) => {
   });
 });
 
+// @route POST api/posts/comment/:id
+// @desc Add comment to post by id
+// @access Private
+router.post('/comment/:id', checkAuth, (req, res) => {
+  const { errors, isValid } = validatePostInput(req.body);
+
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  Post.findById(req.params.id)
+    .then(post => {
+      const newComment = {
+        text: req.body.text,
+        name: req.user.name,
+        avatar: req.user.avatar,
+        user: req.user.id
+      };
+
+      //Add comment to comments array
+      post.comments.unshift(newComment);
+
+      //Save
+      post.save().then(post => res.json(post));
+    })
+    .catch(err => res.status(404).json({ post: 'Post not found' }));
+});
+
 module.exports = router;
