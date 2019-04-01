@@ -145,4 +145,27 @@ router.post('/comment/:id', checkAuth, (req, res) => {
     .catch(err => res.status(404).json({ post: 'Post not found' }));
 });
 
+// @route DELETE api/posts/comment/:id
+// @desc Delete comment from post by id
+// @access Private
+router.delete('/comment/:id/:comment_id', checkAuth, (req, res) => {
+  Post.findById(req.params.id)
+    .then(post => {
+      //Check if comment exists
+      if (post.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0) {
+        res.status(404).json({ comment: 'Comment not found' });
+      }
+
+      // Get remove index
+      const removeIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id);
+
+      // Delete comment from array
+      post.comments.splice(removeIndex, 1);
+
+      //Save
+      post.save().then(post => res.json(post));
+    })
+    .catch(err => res.status(404).json({ post: 'Comment not found' }));
+});
+
 module.exports = router;
