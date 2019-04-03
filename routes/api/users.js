@@ -8,6 +8,7 @@ const checkAuth = require('../../middleware/check-auth');
 //Input validation
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
+const validateProfileInput = require('../../validation/profile');
 
 //Load User model
 const User = require('../../models/User');
@@ -95,11 +96,23 @@ router.post('/login', (req, res) => {
   });
 });
 
-// @route GET api/users/users
+// @route GET api/users/all
 // @desc Return all users
 // @access Private
-router.get('/users', checkAuth, (req, res) => {
-  res.json({ id: req.user.id, name: req.user.name, email: req.user.email });
+router.get('/all', (req, res) => {
+  // res.json({ id: req.user.id, name: req.user.name, email: req.user.email });
+  const errors = {};
+
+  User.find()
+    .then(users => {
+      if (!users) {
+        errors.users = 'There are no users';
+        return res.status(404).json(errors);
+      }
+
+      res.json(users);
+    })
+    .catch(err => res.status(404).json({ profile: 'There are no users' }));
 });
 
 // @route GET api/users/search?=query
@@ -115,6 +128,38 @@ router.get('/search', (req, res) => {
       res.json({ ...response });
     })
     .catch(err => res.status(404).json({ search: 'Something went wrong ... ' }));
+});
+
+// @route POST api/users/:id
+// @desc Get user by id
+// @access Public
+router.post('/:id', checkAuth, (req, res) => {
+  const { errors, isValid } = validateProfileInput(req.body);
+
+  //Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  let newInfo = {
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    avatar: req.body.avatar,
+    about: req.body.about
+  };
+
+  User.findOneAndUpdate(
+    { email: req.params.email },
+    { $set: { ...newInfo } },
+    { upsert: true, new: true },
+    (error, doc) => {
+      if (error) {
+        res.status(404).json({ upadte: 'error' });
+      }
+      res.status(200).json(doc);
+    }
+  );
 });
 
 module.exports = router;
