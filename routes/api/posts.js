@@ -44,6 +44,23 @@ router.post('/', checkAuth, (req, res) => {
   newPost.save().then(post => res.json(post));
 });
 
+// @route GET api/posts/search?=query
+// @desc Search posts route
+// @access Public
+router.get('/search', (req, res) => {
+  console.log(1);
+  Post.find({ $text: { $search: req.query.query } })
+    .limit(10)
+    .populate('user')
+    .then(response => {
+      if (response.length === 0) {
+        return res.status(404).json({ search: 'Nothing ... try something else' });
+      }
+      res.json({ ...response });
+    })
+    .catch(err => res.status(404).json({ search: 'Something went wrong ... ' }));
+});
+
 // @route GET api/posts/:id
 // @desc Get post by id
 // @access Public
