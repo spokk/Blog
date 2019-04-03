@@ -11,13 +11,47 @@ const validateLoginInput = require('../../validation/login');
 
 //Load User model
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 
-// @route GET api/users/test
+// @route GET api/users
 // @desc Tests users route
 // @access Public
 router.get('/test', checkAuth, (req, res) => res.json({ response: 'users works' }));
 
-// @route GET api/users/register
+// @route GET api/users/search/users?=query
+// @desc Search users route
+// @access Public
+router.get('/search/users', (req, res) => {
+  User.find({ $text: { $search: req.query.query } })
+    .limit(10)
+    .then(response => {
+      console.log(response);
+      if (response.length === 0) {
+        return res.status(404).json({ search: 'Nothing ... try something else' });
+      }
+      res.json({ ...response });
+    })
+    .catch(err => res.status(404).json({ search: 'Something went wrong ... ' }));
+});
+
+// @route GET api/users/search?=query
+// @desc Search posts route
+// @access Public
+router.get('/search/posts', (req, res) => {
+  Post.find({ $text: { $search: req.query.query } })
+    .limit(10)
+    .populate('user')
+    .then(response => {
+      console.log(response);
+      if (response.length === 0) {
+        return res.status(404).json({ search: 'Nothing ... try something else' });
+      }
+      res.json({ ...response });
+    })
+    .catch(err => res.status(404).json({ search: 'Something went wrong ... ' }));
+});
+
+// @route POST api/users/register
 // @desc Register users
 // @access Public
 router.post('/register', (req, res) => {
@@ -53,7 +87,7 @@ router.post('/register', (req, res) => {
   });
 });
 
-// @route GET api/users/login
+// @route POST api/users/login
 // @desc Login User / returning JWT
 // @access Public
 router.post('/login', (req, res) => {
