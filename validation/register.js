@@ -6,7 +6,7 @@ module.exports = function validateRegisterInput(data) {
   if (isEmpty(data.name)) errors.name = 'Name is required';
   else {
     if (data.name.length < 4 || data.name.length > 25) {
-      errors.name = 'Name must be between 2 and 25 characters';
+      errors.name = 'Name must be between 4 and 25 characters';
     }
   }
   if (isEmpty(data.email)) errors.email = 'Email is required';

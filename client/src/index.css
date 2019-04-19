@@ -1,4 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+
+::-moz-selection {
+  color: white;
+  background: black;
+}
+
+::selection {
+  color: white;
+  background: black;
+}
+
+html {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+html::-webkit-scrollbar-track {
+  /*shadow inside scrollbar*/
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+html::-webkit-scrollbar {
+  /*scroll color*/
+  background: none;
+}
+
+html::-webkit-scrollbar-thumb {
+  /*scrollbar color*/
+  background-color: red;
+}
+
 body {
+  min-width: 320px;
   margin: 0;
   padding: 0;
 }

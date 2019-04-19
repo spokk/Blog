@@ -162,7 +162,7 @@ router.post('/comment/:id', checkAuth, (req, res) => {
     .catch(err => res.status(404).json({ post: 'Post not found' }));
 });
 
-// @route DELETE api/posts/comment/:id
+// @route DELETE api/posts/comment/:id/:comment_id
 // @desc Delete comment from post by id
 // @access Private
 router.delete('/comment/:id/:comment_id', checkAuth, (req, res) => {
