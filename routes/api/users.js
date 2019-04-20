@@ -100,7 +100,6 @@ router.post('/login', (req, res) => {
 // @desc Return all users
 // @access Private
 router.get('/all', (req, res) => {
-  // res.json({ id: req.user.id, name: req.user.name, email: req.user.email });
   const errors = {};
 
   User.find()
@@ -130,8 +129,26 @@ router.get('/search', (req, res) => {
     .catch(err => res.status(404).json({ search: 'Something went wrong ... ' }));
 });
 
+// @route GET api/users/:id
+// @desc Get user info by id
+// @access Public
+router.get('/:id', (req, res) => {
+  const errors = {};
+
+  User.findById(req.params.id)
+    .then(users => {
+      if (!users) {
+        errors.users = 'There is no user';
+        return res.status(404).json(errors);
+      }
+      const { email, avatar, about, name, id, date } = users;
+      res.json({ email, avatar, about, name, id, date });
+    })
+    .catch(err => res.status(404).json({ profile: 'There is no user' }));
+});
+
 // @route POST api/users/:id
-// @desc Get user by id
+// @desc Edit user by id
 // @access Public
 router.post('/:id', checkAuth, (req, res) => {
   const { errors, isValid } = validateProfileInput(req.body);

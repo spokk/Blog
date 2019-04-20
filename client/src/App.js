@@ -14,6 +14,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Home from './components/Home/Home';
 import Error from './components/Error/Error';
+import User from './components/User/User';
 
 //Check for token
 if (localStorage.token) {
@@ -45,7 +46,7 @@ class App extends Component {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <Route exact path="/user/:id" component={() => <p>User</p>} />
+                <Route exact path="/user/:id" component={User} />
                 <Route exact path="/create" component={() => <p>create</p>} />
                 <Route exact path="/post/:id" component={() => <p>post</p>} />
                 <Route exact path="/contacts" component={() => <p>contacts</p>} />
