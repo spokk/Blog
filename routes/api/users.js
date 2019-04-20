@@ -162,21 +162,42 @@ router.post('/:id', checkAuth, (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    avatar: req.body.avatar,
-    about: req.body.about
+    avatar: req.body.avatar ? req.body.avatar : '',
+    about: req.body.about ? req.body.about : ''
   };
 
-  User.findOneAndUpdate(
-    { email: req.params.email },
-    { $set: { ...newInfo } },
-    { upsert: true, new: true },
-    (error, doc) => {
-      if (error) {
-        res.status(404).json({ upadte: 'error' });
-      }
-      res.status(200).json(doc);
-    }
-  );
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newInfo.password, salt, (err, hash) => {
+      if (err) throw err;
+      newInfo.password = hash;
+
+      //Save to bd
+      User.findOneAndUpdate({ _id: req.user.id }, { $set: { ...newInfo } }, { new: true }, (error, doc) => {
+        // Check if email is already exist
+        if (newInfo.email !== req.user.email && User.findOne({ email: doc.email })) {
+          return res.status(404).json({ upadte: 'email is already exist' });
+        }
+
+        if (error) {
+          return res.status(404).json({ upadte: 'error' });
+        }
+        return res.status(200).json(doc);
+      });
+    });
+  });
+});
+
+// @route   DELETE api/users/:id
+// @desc    Delete user and profile
+// @access  Private
+router.delete('/:id', checkAuth, (req, res) => {
+  if (req.params.id === req.user.id) {
+    User.findOneAndRemove({ _id: req.user.id })
+      .then(user => res.json({ success: true }))
+      .catch(err => {
+        res.json({ err: err });
+      });
+  } else return res.status(404).json({ user: 'Auth fail' });
 });
 
 module.exports = router;
