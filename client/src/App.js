@@ -12,10 +12,12 @@ import './styles/main.sass';
 import Header from './components/layout/Header';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
-import Home from './components/Home/Home';
+import Main from './components/Main/Main';
 import Error from './components/Error/Error';
 import User from './components/user/User';
 import Edit from './components/user/Edit';
+import CreatePost from './components/posts/CreatePost';
+import Post from './components/posts/Post';
 
 //Check for token
 if (localStorage.token) {
@@ -44,13 +46,13 @@ class App extends Component {
             <Header />
             <main className="container">
               <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={Main} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/user/:id" component={User} />
                 <Route exact path="/edit-user" component={Edit} />
-                <Route exact path="/create" component={() => <p>create</p>} />
-                <Route exact path="/post/:id" component={() => <p>post</p>} />
+                <Route exact path="/create" component={CreatePost} />
+                <Route exact path="/post/:id" component={Post} />
                 <Route exact path="/contacts" component={() => <p>contacts</p>} />
                 <Route exact path="/search" component={() => <p>search</p>} />
                 <Route component={Error} />

@@ -35,6 +35,7 @@ router.post('/', checkAuth, (req, res) => {
   }
 
   const newPost = new Post({
+    header: req.body.header,
     text: req.body.text,
     name: req.user.name,
     avatar: req.user.avatar,

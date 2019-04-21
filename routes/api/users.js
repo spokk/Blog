@@ -80,7 +80,7 @@ router.post('/login', (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // User Matched
-        const payload = { id: user.id, name: user.name, email: user.email }; //JWT payload
+        const payload = { id: user.id, name: user.name, email: user.email, avatar: user.avatar }; //JWT payload
 
         // Sign Token
         jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
@@ -98,7 +98,7 @@ router.post('/login', (req, res) => {
 
 // @route GET api/users/all
 // @desc Return all users
-// @access Private
+// @access Public
 router.get('/all', (req, res) => {
   const errors = {};
 
@@ -149,7 +149,7 @@ router.get('/:id', (req, res) => {
 
 // @route POST api/users/:id
 // @desc Edit user by id
-// @access Public
+// @access Private
 router.post('/:id', checkAuth, (req, res) => {
   const { errors, isValid } = validateProfileInput(req.body);
 
@@ -169,6 +169,7 @@ router.post('/:id', checkAuth, (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newInfo.password, salt, (err, hash) => {
       if (err) throw err;
+      //Hash new password
       newInfo.password = hash;
 
       //Save to bd
@@ -194,9 +195,7 @@ router.delete('/:id', checkAuth, (req, res) => {
   if (req.params.id === req.user.id) {
     User.findOneAndRemove({ _id: req.user.id })
       .then(user => res.json({ success: true }))
-      .catch(err => {
-        res.json({ err: err });
-      });
+      .catch(err => res.json({ error: err }));
   } else return res.status(404).json({ user: 'Auth fail' });
 });
 
