@@ -45,6 +45,33 @@ router.post('/', checkAuth, (req, res) => {
   newPost.save().then(post => res.json(post));
 });
 
+// @route POST api/posts/edit/:id
+// @desc Edit post by id
+// @access Private
+router.post('/edit/:id', checkAuth, (req, res) => {
+  const { errors, isValid } = validatePostInput(req.body);
+
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const newPost = {
+    header: req.body.header,
+    text: req.body.text,
+    name: req.user.name,
+    avatar: req.user.avatar,
+    user: req.user.id
+  };
+
+  Post.findByIdAndUpdate(req.params.id, { $set: { ...newPost } }, { new: true }, (error, doc) => {
+    if (error) {
+      return res.status(404).json({ upadte: 'error' });
+    }
+    return res.status(200).json(doc);
+  });
+});
+
 // @route GET api/posts/search?=query
 // @desc Search posts route
 // @access Public
@@ -68,7 +95,7 @@ router.get('/search', (req, res) => {
 router.get('/:id', (req, res) => {
   Post.findById(req.params.id)
     .then(post => res.json(post))
-    .catch(err => res.status(404).json({ post: 'Post not found' }));
+    .catch(err => res.status(404).json({ error: 'Post not found' }));
 });
 
 // @route DELETE api/posts/:id
@@ -79,13 +106,13 @@ router.delete('/:id', checkAuth, (req, res) => {
     Post.findById(req.params.id)
       .then(post => {
         if (post.user.toString() !== req.user.id) {
-          return res.status(401).json({ post: 'No authorized' });
+          return res.status(401).json({ error: 'No authorized' });
         }
 
         // Delete post
         post.remove().then(() => res.json({ success: true }));
       })
-      .catch(err => res.status(404).json({ post: 'Post not found' }));
+      .catch(err => res.status(404).json({ error: 'Post not found' }));
   });
 });
 

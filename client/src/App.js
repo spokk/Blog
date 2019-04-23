@@ -17,6 +17,7 @@ import Error from './components/Error/Error';
 import User from './components/user/User';
 import Edit from './components/user/Edit';
 import CreatePost from './components/posts/CreatePost';
+import EditPost from './components/posts/EditPost';
 import Post from './components/posts/Post';
 
 //Check for token
@@ -32,7 +33,7 @@ if (localStorage.token) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     // Logout user
-    store.dispatch(logoutUser());
+    store.dispatch(logoutUser(this.props.history));
     // window.location.href = '/login';
   }
 }
@@ -52,6 +53,7 @@ class App extends Component {
                 <Route exact path="/user/:id" component={User} />
                 <Route exact path="/edit-user" component={Edit} />
                 <Route exact path="/create" component={CreatePost} />
+                <Route exact path="/edit/:id" component={EditPost} />
                 <Route exact path="/post/:id" component={Post} />
                 <Route exact path="/contacts" component={() => <p>contacts</p>} />
                 <Route exact path="/search" component={() => <p>search</p>} />
