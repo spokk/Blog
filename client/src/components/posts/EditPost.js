@@ -64,8 +64,8 @@ class EditPost extends Component {
                   placeholder="Enter a header"
                   value={this.state.header}
                   onChange={this.onChange}
-                  maxLength="50"
                   minLength="4"
+                  maxLength="50"
                   required
                 />
                 {error.header && <span className="">{error.header}</span>}
@@ -78,8 +78,8 @@ class EditPost extends Component {
                   rows="10"
                   cols="45"
                   name="text"
-                  maxLength="3000"
                   minLength="10"
+                  maxLength="3000"
                   placeholder="Text here"
                   value={this.state.text}
                   onChange={this.onChange}

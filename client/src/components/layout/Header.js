@@ -13,7 +13,7 @@ class Header extends Component {
     const { isAuth, user } = this.props.auth;
 
     const guestLinks = (
-      <ul className="navbar__list">
+      <>
         <li className="navbar__item">
           <Link to="/register" className="navbar__link">
             Sign up
@@ -24,27 +24,24 @@ class Header extends Component {
             Sign in
           </Link>
         </li>
-      </ul>
+      </>
     );
 
     const userLinks = isAuth && (
       <>
-        <div className="navbar__search-wrapper">
-          <input type="text" className="navbar__search" />
-          <button className="navbar__search-btn" onClick={null}>
-            Search
-          </button>
-        </div>
-        <ul className="navbar__list">
-          <li className="navbar__item">
-            <Link to={`/user/${user.id}`} className="navbar__link">
-              {user.name}
-            </Link>
-          </li>
-          <li className="navbar__item">
-            <button onClick={this.onLogout}>Logout</button>
-          </li>
-        </ul>
+        <li className="navbar__item">
+          <Link to="/create" className="logo header__logo">
+            Create post
+          </Link>
+        </li>
+        <li className="navbar__item">
+          <Link to={`/user/${user.id}`} className="navbar__link">
+            {user.name}
+          </Link>
+        </li>
+        <li className="navbar__item">
+          <button onClick={this.onLogout}>Logout</button>
+        </li>
       </>
     );
 
@@ -52,19 +49,26 @@ class Header extends Component {
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <Link to="/" className="logo header__logo">
-              Home
-            </Link>
-            <Link to="/create" className="logo header__logo">
-              Post
-            </Link>
             <nav className="navbar">
               <div className="navbar__mobile-btn header-btn">
                 <span className="header-btn__line" />
                 <span className="header-btn__line" />
                 <span className="header-btn__line" />
               </div>
-              {isAuth ? userLinks : guestLinks}
+              <ul className="navbar__list">
+                <li className="navbar__item">
+                  <Link to="/" className="logo header__logo">
+                    Home
+                  </Link>
+                </li>
+                {isAuth ? userLinks : guestLinks}
+              </ul>
+              <div className="navbar__search-wrapper">
+                <input type="text" className="navbar__search" />
+                <button className="navbar__search-btn" onClick={null}>
+                  Search
+                </button>
+              </div>
             </nav>
           </div>
         </div>

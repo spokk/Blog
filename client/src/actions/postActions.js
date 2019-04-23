@@ -8,7 +8,9 @@ import {
   LIKE_POST,
   DISLIKE_POST,
   EDIT_POST,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  CREATE_COMMENT,
+  DELETE_COMMENT
 } from './types';
 
 //Get posts
@@ -139,6 +141,41 @@ export const dislikePost = id => dispatch => {
     );
 };
 
+//Create comment
+export const createComment = (id, newComment) => dispatch => {
+  axios
+    .post(`/api/posts/comment/${id}`, newComment)
+    .then(res =>
+      dispatch({
+        type: CREATE_COMMENT,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: ERROR,
+        payload: err.response.data
+      })
+    );
+};
+
+//Delete comment
+export const deleteComment = (postId, commentId) => dispatch => {
+  axios
+    .delete(`/api/posts/comment/${postId}/${commentId}`)
+    .then(res =>
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: ERROR,
+        payload: err.response.data
+      })
+    );
+};
 export const clearErrors = () => dispatch => {
   return dispatch({
     type: CLEAR_ERRORS

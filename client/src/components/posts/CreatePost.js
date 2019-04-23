@@ -40,49 +40,48 @@ class CreatePost extends Component {
 
   render() {
     const { error } = this.state;
+    const isDisabled = this.state.text.length < 10 || this.state.header.length < 5 ? 'disabled' : false;
     return (
       <div className="create">
-        <div className="container">
-          <h1>Create a new post</h1>
-          <form onSubmit={this.onSubmit}>
-            <div className="form__group">
-              <label>
-                Header
-                <input
-                  type="text"
-                  name="header"
-                  placeholder="Enter a header"
-                  value={this.state.header}
-                  onChange={this.onChange}
-                  maxLength="50"
-                  minLength="4"
-                  required
-                />
-                {error.header && <span className="">{error.header}</span>}
-              </label>
-            </div>
-            <div className="form__group">
-              <label>
-                Text
-                <textarea
-                  rows="10"
-                  cols="45"
-                  name="text"
-                  maxLength="3000"
-                  minLength="10"
-                  placeholder="Text here"
-                  value={this.state.text}
-                  onChange={this.onChange}
-                  required
-                />
-                {error.text && <span className="">{error.text}</span>}
-              </label>
-            </div>
-            <div className="form__group">
-              <input type="submit" />
-            </div>
-          </form>
-        </div>
+        <h1>Create a new post</h1>
+        <form onSubmit={this.onSubmit}>
+          <div className="form__group">
+            <label>
+              <p>Header</p>
+              <input
+                type="text"
+                name="header"
+                placeholder="Enter a header"
+                value={this.state.header}
+                onChange={this.onChange}
+                maxLength="50"
+                minLength="4"
+                required
+              />
+              {error.header && <span className="">{error.header}</span>}
+            </label>
+          </div>
+          <div className="form__group">
+            <label>
+              <p>Text</p>
+              <textarea
+                rows="10"
+                cols="45"
+                name="text"
+                maxLength="3000"
+                minLength="10"
+                placeholder="Text here"
+                value={this.state.text}
+                onChange={this.onChange}
+                required
+              />
+              {error.text && <span className="">{error.text}</span>}
+            </label>
+          </div>
+          <div className="form__group">
+            <input type="submit" disabled={isDisabled} />
+          </div>
+        </form>
       </div>
     );
   }

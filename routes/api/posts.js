@@ -7,6 +7,7 @@ const User = require('../../models/User');
 
 // Validation
 const validatePostInput = require('../../validation/post');
+const validateCommentInput = require('../../validation/comment');
 
 // @route GET api/posts/test
 // @desc Tests posts route
@@ -165,7 +166,7 @@ router.post('/unlike/:id', checkAuth, (req, res) => {
 // @desc Add comment to post by id
 // @access Private
 router.post('/comment/:id', checkAuth, (req, res) => {
-  const { errors, isValid } = validatePostInput(req.body);
+  const { errors, isValid } = validateCommentInput(req.body);
 
   // Check validation
   if (!isValid) {
@@ -198,17 +199,25 @@ router.delete('/comment/:id/:comment_id', checkAuth, (req, res) => {
     .then(post => {
       //Check if comment exists
       if (post.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0) {
-        res.status(404).json({ comment: 'Comment not found' });
+        return res.status(404).json({ comment: 'Comment not found' });
       }
 
-      // Get remove index
-      const removeIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id);
+      post.comments.map(comment => {
+        if (comment.user.toString() === req.user.id && comment._id.toString() === req.params.comment_id) {
+          // Get remove index
+          const removeIndex = post.comments
+            .map(comment => comment._id.toString())
+            .indexOf(req.params.comment_id);
 
-      // Delete comment from array
-      post.comments.splice(removeIndex, 1);
+          // Delete comment from array
+          post.comments.splice(removeIndex, 1);
 
-      //Save
-      post.save().then(post => res.json(post));
+          //Save
+          return post.save().then(post => {
+            return res.json(post);
+          });
+        }
+      });
     })
     .catch(err => res.status(404).json({ post: 'Comment not found' }));
 });

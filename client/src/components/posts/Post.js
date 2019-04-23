@@ -4,12 +4,15 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPostById, deletePostById, likePost, dislikePost } from '../../actions/postActions';
 
+import CommentsFeed from '../comments/CommentsFeed';
+import CreateComment from '../comments/CreateComment';
+
 class Post extends Component {
   state = {
     text: '',
     avatar: '',
-    likes: '',
-    comments: '',
+    likes: [],
+    comments: [],
     date: '',
     header: '',
     user: '',
@@ -60,6 +63,10 @@ class Post extends Component {
     this.props.dislikePost(this.props.match.params.id);
   };
 
+  onCommentDelete = () => {
+    console.log(1);
+  };
+
   render() {
     const { text, avatar, likes, comments, date, header, user, id, isAuth } = this.state;
     const defaultAvatar = 'https://bizraise.pro/wp-content/uploads/2014/09/no-avatar-300x300.png';
@@ -79,15 +86,19 @@ class Post extends Component {
       )
     ) : null;
     return (
-      <div style={{ border: '1px solid red', margin: '10px 0' }}>
-        <img src={avatar.length ? avatar : defaultAvatar} width="50" alt="avatar" />
-        <h2>{header}</h2>
-        <p>Text: {text}</p>
-        <p>Likes: {likes.length}</p>
-        <p>Comments: {comments.length}</p>
-        <p>Date: {date}</p>
-        {buttonList}
-      </div>
+      <>
+        <div style={{ border: '1px solid red', margin: '10px 0' }}>
+          <img src={avatar.length ? avatar : defaultAvatar} width="50" alt="avatar" />
+          <h2>{header}</h2>
+          <p>Text: {text}</p>
+          <p>Likes: {likes.length}</p>
+          <p>Comments: {comments.length}</p>
+          <p>Date: {date}</p>
+          {buttonList}
+        </div>
+        {this.state.isAuth && <CreateComment />}
+        <CommentsFeed comments={this.state.comments} id={this.props.match.params.id} />
+      </>
     );
   }
 }
@@ -97,7 +108,7 @@ Post.propTypes = {
   likePost: PropTypes.func.isRequired,
   deletePostById: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  error: PropTypes.object.isRequired
+  error: PropTypes.object
 };
 
 const mapStateToProps = state => ({

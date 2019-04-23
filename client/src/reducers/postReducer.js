@@ -1,4 +1,13 @@
-import { GET_POSTS, CREATE_POST, GET_POST, LIKE_POST, DISLIKE_POST, EDIT_POST } from '../actions/types';
+import {
+  GET_POSTS,
+  CREATE_POST,
+  GET_POST,
+  LIKE_POST,
+  DISLIKE_POST,
+  EDIT_POST,
+  CREATE_COMMENT,
+  DELETE_COMMENT
+} from '../actions/types';
 const initialState = {
   posts: [],
   post: {}
@@ -32,6 +41,16 @@ export default function(state = initialState, action) {
         posts: action.payload
       };
     case EDIT_POST:
+      return {
+        ...state,
+        post: action.payload
+      };
+    case CREATE_COMMENT:
+      return {
+        ...state,
+        post: action.payload
+      };
+    case DELETE_COMMENT:
       return {
         ...state,
         post: action.payload
