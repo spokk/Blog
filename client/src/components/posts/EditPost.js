@@ -50,6 +50,7 @@ class EditPost extends Component {
 
   render() {
     const { error } = this.state;
+    const isDisabled = this.state.text.length < 10 || this.state.header.length < 5 ? 'disabled' : false;
     return (
       <div className="create">
         <div className="container">
@@ -57,7 +58,7 @@ class EditPost extends Component {
           <form onSubmit={this.onSubmit}>
             <div className="form__group">
               <label>
-                Header
+                <p>Header</p>
                 <input
                   type="text"
                   name="header"
@@ -73,7 +74,7 @@ class EditPost extends Component {
             </div>
             <div className="form__group">
               <label>
-                Text
+                <p>Text</p>
                 <textarea
                   rows="10"
                   cols="45"
@@ -89,7 +90,7 @@ class EditPost extends Component {
               </label>
             </div>
             <div className="form__group">
-              <input type="submit" />
+              <input type="submit" disabled={isDisabled} />
             </div>
           </form>
         </div>

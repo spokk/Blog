@@ -53,7 +53,11 @@ class User extends Component {
         <hr />
         <p>id: {id}</p>
         <p>date: {date}</p>
-        <button onClick={this.onDelete}>delete</button> <Link to="/edit-user">edit</Link>
+        {this.props.auth.isAuth && this.props.auth.user.id === this.props.match.params.id && (
+          <>
+            <button onClick={this.onDelete}>delete</button> <Link to="/edit-user">edit</Link>
+          </>
+        )}
       </div>
     );
   }

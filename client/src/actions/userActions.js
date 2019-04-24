@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { logoutUser } from './authActions';
+import jwt_decode from 'jwt-decode';
+import { setAuthToken } from '../utils/setAuthToken';
+import { logoutUser, setUser } from './authActions';
 import { ERROR, GET_USER } from './types';
 
 //Get user
@@ -39,7 +41,18 @@ export const deleteUser = (id, history) => dispatch => {
 export const editUser = (id, userData, history) => dispatch => {
   axios
     .post(`/api/users/${id}`, userData)
-    .then(res => history.push(`/user/${id}`))
+    .then(res => {
+      // Save token to localStorage
+      const { token } = res.data;
+      localStorage.setItem('token', token);
+      // Set token to axios Auth header
+      setAuthToken(token);
+      // Decode user info from token
+      const decoded = jwt_decode(token);
+      // Set user
+      dispatch(setUser(decoded));
+      history.push(`/user/${id}`);
+    })
     .catch(err =>
       dispatch({
         type: ERROR,

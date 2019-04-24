@@ -19,6 +19,7 @@ import Edit from './components/user/Edit';
 import CreatePost from './components/posts/CreatePost';
 import EditPost from './components/posts/EditPost';
 import Post from './components/posts/Post';
+import Footer from './components/layout/Footer';
 
 //Check for token
 if (localStorage.token) {
@@ -33,7 +34,7 @@ if (localStorage.token) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     // Logout user
-    store.dispatch(logoutUser(this.props.history));
+    store.dispatch(logoutUser());
     // window.location.href = '/login';
   }
 }
@@ -60,6 +61,7 @@ class App extends Component {
                 <Route component={Error} />
               </Switch>
             </main>
+            <Footer />
           </div>
         </BrowserRouter>
       </Provider>

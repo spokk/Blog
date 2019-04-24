@@ -63,10 +63,6 @@ class Post extends Component {
     this.props.dislikePost(this.props.match.params.id);
   };
 
-  onCommentDelete = () => {
-    console.log(1);
-  };
-
   render() {
     const { text, avatar, likes, comments, date, header, user, id, isAuth } = this.state;
     const defaultAvatar = 'https://bizraise.pro/wp-content/uploads/2014/09/no-avatar-300x300.png';

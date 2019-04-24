@@ -37,7 +37,9 @@ router.post('/register', (req, res) => {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        avatar: '',
+        about: ''
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -136,13 +138,13 @@ router.get('/:id', (req, res) => {
   const errors = {};
 
   User.findById(req.params.id)
-    .then(users => {
-      if (!users) {
-        errors.users = 'There is no user';
+    .then(user => {
+      if (!user) {
+        errors.user = 'There is no user';
         return res.status(404).json(errors);
       }
-      const { email, avatar, about, name, id, date } = users;
-      res.json({ email, avatar, about, name, id, date });
+      const { email, avatar, about, name, id, date } = user;
+      return res.json({ email, avatar, about, name, id, date });
     })
     .catch(err => res.status(404).json({ profile: 'There is no user' }));
 });
@@ -151,6 +153,7 @@ router.get('/:id', (req, res) => {
 // @desc Edit user by id
 // @access Private
 router.post('/:id', checkAuth, (req, res) => {
+  // console.log(req.body);
   const { errors, isValid } = validateProfileInput(req.body);
 
   //Check validation
@@ -178,11 +181,14 @@ router.post('/:id', checkAuth, (req, res) => {
         if (newInfo.email !== req.user.email && User.findOne({ email: doc.email })) {
           return res.status(404).json({ upadte: 'email is already exist' });
         }
+        if (error) return res.status(404).json({ upadte: 'error' });
 
-        if (error) {
-          return res.status(404).json({ upadte: 'error' });
-        }
-        return res.status(200).json(doc);
+        // New payload for jwt
+        const payload = { id: req.user.id, name: newInfo.name, email: newInfo.email, avatar: newInfo.avatar }; //JWT payload
+        // Sign Token
+        jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) =>
+          res.status(200).json({ token: 'Bearer ' + token })
+        );
       });
     });
   });

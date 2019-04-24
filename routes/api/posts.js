@@ -76,8 +76,7 @@ router.post('/edit/:id', checkAuth, (req, res) => {
 // @route GET api/posts/search?=query
 // @desc Search posts route
 // @access Public
-router.get('/search', (req, res) => {
-  console.log(1);
+router.get('/search?=query', (req, res) => {
   Post.find({ $text: { $search: req.query.query } })
     .limit(10)
     .populate('user')
