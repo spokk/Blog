@@ -22,7 +22,6 @@ class PostsFeed extends Component {
 
   render() {
     const { posts } = this.state;
-
     const postFeed = posts.map((post, i) => {
       const { text, avatar, likes, comments, date, header, _id } = post;
       const defaultAvatar = 'https://bizraise.pro/wp-content/uploads/2014/09/no-avatar-300x300.png';

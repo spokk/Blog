@@ -116,7 +116,7 @@ router.get('/all', (req, res) => {
     .catch(err => res.status(404).json({ profile: 'There are no users' }));
 });
 
-// @route GET api/users/search?=query
+// @route GET api/users/search?query=
 // @desc Search users route
 // @access Public
 router.get('/search', (req, res) => {
@@ -126,7 +126,7 @@ router.get('/search', (req, res) => {
       if (response.length === 0) {
         return res.status(404).json({ search: 'Nothing ... try something else' });
       }
-      res.json({ ...response });
+      res.json(response);
     })
     .catch(err => res.status(404).json({ search: 'Something went wrong ... ' }));
 });

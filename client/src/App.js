@@ -15,10 +15,14 @@ import Login from './components/auth/Login';
 import Main from './components/Main/Main';
 import Error from './components/Error/Error';
 import User from './components/user/User';
+import Users from './components/user/Users';
 import Edit from './components/user/Edit';
 import CreatePost from './components/posts/CreatePost';
 import EditPost from './components/posts/EditPost';
 import Post from './components/posts/Post';
+import Search from './components/Search/Search';
+import Contacts from './components/Contacts/Contacts';
+import About from './components/About/About';
 import Footer from './components/layout/Footer';
 
 //Check for token
@@ -52,12 +56,14 @@ class App extends Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/user/:id" component={User} />
+                <Route exact path="/users" component={Users} />
                 <Route exact path="/edit-user" component={Edit} />
                 <Route exact path="/create" component={CreatePost} />
                 <Route exact path="/edit/:id" component={EditPost} />
                 <Route exact path="/post/:id" component={Post} />
-                <Route exact path="/contacts" component={() => <p>contacts</p>} />
-                <Route exact path="/search" component={() => <p>search</p>} />
+                <Route exact path="/contacts" component={Contacts} />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/search" component={Search} />
                 <Route component={Error} />
               </Switch>
             </main>

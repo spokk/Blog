@@ -2,7 +2,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { setAuthToken } from '../utils/setAuthToken';
 import { logoutUser, setUser } from './authActions';
-import { ERROR, GET_USER } from './types';
+import { ERROR, GET_USER, GET_USERS } from './types';
 
 //Get user
 export const getUser = id => dispatch => {
@@ -52,6 +52,24 @@ export const editUser = (id, userData, history) => dispatch => {
       // Set user
       dispatch(setUser(decoded));
       history.push(`/user/${id}`);
+    })
+    .catch(err =>
+      dispatch({
+        type: ERROR,
+        payload: err.response.data
+      })
+    );
+};
+
+//Get user
+export const getUsers = () => dispatch => {
+  axios
+    .get('/api/users/all')
+    .then(res => {
+      dispatch({
+        type: GET_USERS,
+        payload: res.data
+      });
     })
     .catch(err =>
       dispatch({

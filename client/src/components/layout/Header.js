@@ -4,13 +4,27 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
+import { searchPosts } from '../../actions/searchActions';
 
 class Header extends Component {
+  state = {
+    search: '',
+    error: {}
+  };
   onLogout = () => {
     this.props.logoutUser(this.props.history);
   };
+  onChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+  onSearch = () => {
+    this.props.searchPosts(this.state.search, this.props.history);
+  };
   render() {
     const { isAuth, user } = this.props.auth;
+    const isDisabled = this.state.search.length === 0 ? 'disabled' : false;
 
     const guestLinks = (
       <>
@@ -61,11 +75,26 @@ class Header extends Component {
                     Home
                   </Link>
                 </li>
+                <li className="navbar__item">
+                  <Link to="/about" className="logo header__logo">
+                    About
+                  </Link>
+                </li>
+                <li className="navbar__item">
+                  <Link to="/users" className="logo header__logo">
+                    Users
+                  </Link>
+                </li>
+                <li className="navbar__item">
+                  <Link to="/contacts" className="logo header__logo">
+                    Contacts
+                  </Link>
+                </li>
                 {isAuth ? userLinks : guestLinks}
               </ul>
               <div className="navbar__search-wrapper">
-                <input type="text" className="navbar__search" />
-                <button className="navbar__search-btn" onClick={null}>
+                <input type="text" className="navbar__search" name="search" onChange={this.onChange} />
+                <button className="navbar__search-btn" onClick={this.onSearch} disabled={isDisabled}>
                   Search
                 </button>
               </div>
@@ -78,6 +107,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
+  searchPosts: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -88,5 +118,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, searchPosts }
 )(withRouter(Header));

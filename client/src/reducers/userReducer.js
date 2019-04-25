@@ -1,6 +1,7 @@
-import { GET_USER } from '../actions/types';
+import { GET_USER, GET_USERS } from '../actions/types';
 const initialState = {
-  user: null
+  user: null,
+  users: []
 };
 
 export default function(state = initialState, action) {
@@ -9,6 +10,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         user: action.payload
+      };
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload
       };
     default:
       return state;
