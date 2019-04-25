@@ -6,19 +6,32 @@ import { getPosts } from '../../actions/postActions';
 
 class PostsFeed extends Component {
   state = {
-    posts: []
+    posts: [],
+    page: 1
   };
   componentDidMount() {
-    this.props.getPosts();
+    this.props.getPosts(this.state.page);
+    this.setState({
+      page: this.state.page + 1
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.posts.posts) {
       this.setState({
-        posts: nextProps.posts.posts
+        posts: [...this.state.posts, ...nextProps.posts.posts]
       });
     }
   }
+
+  showMore = () => {
+    this.setState(
+      prevState => ({
+        page: prevState.page + 1
+      }),
+      this.props.getPosts(this.state.page)
+    );
+  };
 
   render() {
     const { posts } = this.state;
@@ -38,7 +51,14 @@ class PostsFeed extends Component {
       );
     });
 
-    return postFeed;
+    return (
+      <>
+        {postFeed}
+        <div>
+          <button onClick={this.showMore}>Show more</button>
+        </div>
+      </>
+    );
   }
 }
 

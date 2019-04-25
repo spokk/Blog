@@ -17,9 +17,13 @@ router.get('/test', (req, res) => res.json({ response: 'Posts works' }));
 // @route GET api/posts
 // @desc Get all posts
 // @access Public
-router.get('/', (req, res) => {
+router.get('/page/:page', (req, res) => {
+  let page = parseInt(req.params.page);
+  let skip = 3 * (page - 1);
   Post.find()
     .sort({ date: -1 })
+    .limit(3)
+    .skip(skip)
     .then(posts => res.json(posts))
     .catch(err => res.status(404).json({ posts: 'Posts not found' }));
 });

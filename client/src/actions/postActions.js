@@ -14,9 +14,9 @@ import {
 } from './types';
 
 //Get posts
-export const getPosts = () => dispatch => {
+export const getPosts = page => dispatch => {
   axios
-    .get('/api/posts')
+    .get(`/api/posts/page/${page}`)
     .then(res => {
       dispatch({
         type: GET_POSTS,
@@ -26,7 +26,7 @@ export const getPosts = () => dispatch => {
     .catch(err =>
       dispatch({
         type: ERROR,
-        payload: err.response.data
+        payload: err.response
       })
     );
 };
