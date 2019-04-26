@@ -83,7 +83,7 @@ class Post extends Component {
     ) : null;
     return (
       <>
-        <div style={{ border: '1px solid red', margin: '10px 0' }}>
+        <div>
           <img src={avatar.length ? avatar : defaultAvatar} width="50" alt="avatar" />
           <h2>{header}</h2>
           <p>Text: {text}</p>

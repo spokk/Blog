@@ -1,0 +1,83 @@
+.posts
+    &__wrapper
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+    &__show-more
+        margin: 0 auto
+        font-size: 18px
+        color: #fff
+        background-color: #38a9ff
+        &:hover
+            transform: rotate(180deg)
+.post
+    margin-bottom: 2%
+    display: block
+    border-radius: 6px
+    overflow: hidden
+    flex-basis: 49%
+    max-height: 200px
+    text-decoration: none 
+    color: #515365
+    border: 1px solid #e6ecf5
+    &:hover
+        transform: scale(1.03)
+    @media (max-width: 991px)
+        flex-basis: 100%
+    &:visited
+        color: #515365
+    &__wrapper
+        background: #fff
+        display: flex
+        height: 100%
+        padding: 15px
+        align-items: center
+        position: relative
+    &__avatar
+        min-height: 160px
+        min-width: 160px
+        max-height: 160px
+        max-width: 160px
+        width: 100%
+        height: 100%
+        border-radius: 50%
+        object-fit: cover
+        margin-right: 20px
+        -webkit-box-shadow: 0px 6px 12px -2px rgba(0,0,0,0.53)
+        box-shadow: 0px 6px 12px -2px rgba(0,0,0,0.53)
+        @media (max-width: 667px)
+            display: none
+
+    &__info
+        align-self: flex-start
+    &__header
+        margin: 0
+        margin-bottom: 8px
+        color: #515365
+        text-transform: capitalize
+        width: fit-content
+        padding-left: 3px
+        border-bottom: 1px solid
+        border-left: 1px solid
+        border-bottom-left-radius: 6px
+    &__text
+        max-height: 85px
+        overflow: hidden
+        margin-top: 0
+        margin-bottom: 25px
+    &__stats
+        position: absolute
+        font-size: 18px
+        color: #515365
+        opacity: 0.9
+        width: 70px
+        display: flex
+        justify-content: space-between
+        bottom: 15px
+        right: 15px
+        vertical-align: baseline
+        &-item
+            letter-spacing: 2px
+    &__likes
+        display: flex
+        align-items: center
