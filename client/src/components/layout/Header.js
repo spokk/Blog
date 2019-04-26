@@ -12,6 +12,7 @@ class Header extends Component {
     search: '',
     error: {}
   };
+
   onLogout = () => {
     this.props.logoutUser(this.props.history);
   };
@@ -23,6 +24,17 @@ class Header extends Component {
   onSearch = () => {
     this.props.searchPosts(this.state.search, this.props.history);
   };
+
+  onMenuClick = () => {
+    let mobileMenu = document.querySelector('.navbar__list');
+    mobileMenu.classList.toggle('navbar__list--mobile-open');
+  };
+
+  onLinkClick = e => {
+    let mobileMenu = document.querySelector('.navbar__list');
+    if (e.target.tagName === 'A') mobileMenu.classList.remove('navbar__list--mobile-open');
+  };
+
   render() {
     const { isAuth, user } = this.props.auth;
     const isDisabled = this.state.search.length === 0 ? 'disabled' : false;
@@ -68,10 +80,10 @@ class Header extends Component {
         <div className="container">
           <div className="header__wrapper">
             <nav className="navbar">
-              <div className="navbar__mobile-btn header-btn button--round">
+              <button className="navbar__mobile-btn header-btn button--round" onClick={this.onMenuClick}>
                 <i className="fas fa-bars" />
-              </div>
-              <ul className="navbar__list">
+              </button>
+              <ul className="navbar__list" onClick={this.onLinkClick}>
                 <li className="navbar__item">
                   <NavLink exact to="/" className="navbar__link" activeClassName="navbar__link--active">
                     Home
