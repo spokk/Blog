@@ -1,7 +1,7 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "Blog - project for EPAM",
+  "description": "Blog",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -1,0 +1,97 @@
+.header
+    margin-top: 30px
+    &__wrapper
+        background: url('../../img/header_landscape.jpg') center/cover no-repeat
+        height: 420px
+        margin-top: 0
+        border-top-left-radius: 8px
+        border-top-right-radius: 8px
+        display: flex
+        align-items: flex-end
+        justify-content: center
+        border: 1px solid #e6ecf5
+        @media (max-width: 767px)
+            height: auto
+            background: none
+            
+
+.navbar
+    background: #fff
+    width: 100%
+    display: flex
+    justify-content: space-around
+    align-items: center
+    height: 70px
+    padding: 0 15px
+    position: relative
+    @media (max-width: 767px)
+        border-top-left-radius: 8px
+        border-top-right-radius: 8px
+    &__mobile-btn
+        display: none
+        background-color: #7c5ac2
+        font-size: 18px
+        color: #fff
+        @media (max-width: 767px)
+            display: flex
+    &__list
+        display: flex
+        justify-content: space-between
+        align-items: center
+        width: 75%
+        padding: 0
+        margin-right: 15px
+        @media (max-width: 767px)
+            display: none
+        &--mobile-open
+            @media (max-width: 767px)
+                display: flex
+                position: absolute
+                flex-direction: column
+                background: #fff
+                width: 100%
+                top: 100%
+                margin: 0
+                padding: 10px 0
+                border-bottom-left-radius: 8px
+                border-bottom-right-radius: 8px
+    &__item
+        list-style-type: none
+        @media (max-width: 767px)
+            margin: 5px
+            font-size: 16px
+    &__logout
+        font-size: 18px
+        color: #fff
+        background-color: #ff5e3a
+        &:hover
+            color: #515365
+    &__link
+        text-decoration: none
+        font-weight: 700
+        color: #9a9fbf
+        &:hover
+            color: #515365
+        &--active
+            color: #515365
+    &__search-wrapper
+        display: flex
+        justify-content: flex-end
+        align-items: center
+    &__search-btn
+        font-size: 18px
+        color: #fff
+        background-color: #38a9ff
+        &:hover
+            color: #515365
+    &__search
+        height: 26px
+        padding: 3px 20px 3px 5px
+        margin-right: -15px
+        color: #515365
+        border: 2px solid #38a9ff
+        border-radius: 6px
+        font-family: inherit
+        font-weight: 700
+        
+    

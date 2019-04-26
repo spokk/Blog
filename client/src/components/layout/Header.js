@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink /*, Link */ } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
 import { searchPosts } from '../../actions/searchActions';
+
+import './Header.sass';
 
 class Header extends Component {
   state = {
@@ -29,14 +30,14 @@ class Header extends Component {
     const guestLinks = (
       <>
         <li className="navbar__item">
-          <Link to="/register" className="navbar__link">
+          <NavLink to="/register" className="navbar__link" activeClassName="navbar__link--active">
             Sign up
-          </Link>
+          </NavLink>
         </li>
         <li className="navbar__item">
-          <Link to="/login" className="navbar__link">
+          <NavLink to="/login" className="navbar__link" activeClassName="navbar__link--active">
             Sign in
-          </Link>
+          </NavLink>
         </li>
       </>
     );
@@ -44,17 +45,20 @@ class Header extends Component {
     const userLinks = isAuth && (
       <>
         <li className="navbar__item">
-          <Link to="/create" className="logo header__logo">
+          <NavLink to="/create" className="navbar__link" activeClassName="navbar__link--active">
             Create post
-          </Link>
+          </NavLink>
         </li>
         <li className="navbar__item">
-          <Link to={`/user/${user.id}`} className="navbar__link">
+          <NavLink to={`/user/${user.id}`} className="navbar__link" activeClassName="navbar__link--active">
             {user.name}
-          </Link>
+          </NavLink>
         </li>
-        <li className="navbar__item">
-          <button onClick={this.onLogout}>Logout</button>
+        <li className="navbar__item navbar__item--logout">
+          <button onClick={this.onLogout} className="navbar__logout button--round" title="logout">
+            <i className="fas fa-sign-out-alt" />
+            <span className="ally">Logout</span>
+          </button>
         </li>
       </>
     );
@@ -64,38 +68,42 @@ class Header extends Component {
         <div className="container">
           <div className="header__wrapper">
             <nav className="navbar">
-              <div className="navbar__mobile-btn header-btn">
-                <span className="header-btn__line" />
-                <span className="header-btn__line" />
-                <span className="header-btn__line" />
+              <div className="navbar__mobile-btn header-btn button--round">
+                <i className="fas fa-bars" />
               </div>
               <ul className="navbar__list">
                 <li className="navbar__item">
-                  <Link to="/" className="logo header__logo">
+                  <NavLink exact to="/" className="navbar__link" activeClassName="navbar__link--active">
                     Home
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="navbar__item">
-                  <Link to="/about" className="logo header__logo">
+                  <NavLink to="/about" className="navbar__link" activeClassName="navbar__link--active">
                     About
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="navbar__item">
-                  <Link to="/users" className="logo header__logo">
+                  <NavLink to="/users" className="navbar__link" activeClassName="navbar__link--active">
                     Users
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="navbar__item">
-                  <Link to="/contacts" className="logo header__logo">
+                  <NavLink to="/contacts" className="navbar__link" activeClassName="navbar__link--active">
                     Contacts
-                  </Link>
+                  </NavLink>
                 </li>
                 {isAuth ? userLinks : guestLinks}
               </ul>
               <div className="navbar__search-wrapper">
                 <input type="text" className="navbar__search" name="search" onChange={this.onChange} />
-                <button className="navbar__search-btn" onClick={this.onSearch} disabled={isDisabled}>
-                  Search
+                <button
+                  className="navbar__search-btn button--round"
+                  onClick={this.onSearch}
+                  disabled={isDisabled}
+                  title="search"
+                >
+                  <i className="fas fa-search" />
+                  <span className="ally">Search</span>
                 </button>
               </div>
             </nav>
