@@ -4,6 +4,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUsers } from '../../actions/userActions';
 
+import './Users.sass';
+
 class Users extends Component {
   state = {
     users: []
@@ -23,18 +25,24 @@ class Users extends Component {
       const { email, avatar, name, _id } = user;
       const defaultAvatar = 'https://bizraise.pro/wp-content/uploads/2014/09/no-avatar-300x300.png';
       return (
-        <div key={i}>
-          <img src={avatar.length ? avatar : defaultAvatar} width="100" alt="avatar" />
-          <p>name: {name}</p>
-          <p>email: {email}</p>
-          <Link to={`/user/${_id}`}>{name} link</Link>
-        </div>
+        <Link className="user" to={`/user/${_id}`} key={i}>
+          <img
+            className="user__avatar"
+            src={avatar.length ? avatar : defaultAvatar}
+            width="100"
+            alt="avatar"
+          />
+          <div className="user__credentials">
+            <p className="user__name">{name}</p>
+            <p className="user__email">{email}</p>
+          </div>
+        </Link>
       );
     });
     return (
       <>
-        <h2>All users</h2>
-        {usersList}
+        <h2 className="users__header">All users</h2>
+        <div className="users__wrapper">{usersList}</div>
       </>
     );
   }

@@ -30,6 +30,11 @@ body
   padding: 0
   background-color: #edf2f6
 
+main
+  min-height: calc(100vh - 585px)
+  @media (max-width: 767px)
+    min-height: calc(100vh - 235px)
+
   
 .container
   width: 100%
@@ -45,7 +50,8 @@ body
 
 a,button
   transition: all .3s ease
-
+a
+  color: #515365
 .ally
   font-size: 0
   opacity: 0

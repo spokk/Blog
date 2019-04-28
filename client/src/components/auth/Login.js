@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
 
+import './Sign.sass';
+
 class Login extends Component {
   state = {
     email: '',
@@ -42,14 +44,15 @@ class Login extends Component {
   render() {
     const { error } = this.state;
     return (
-      <div className="register">
+      <div className="sign">
         <div className="container">
-          <h1>Sign In</h1>
-          <form onSubmit={this.onSubmit}>
-            <div className="form__group">
+          <h1 className="sign__header">Sign In</h1>
+          <form className="sign__form" onSubmit={this.onSubmit}>
+            <div>
               <label>
-                E-mail
+                <p className="sign__label">E-mail</p>
                 <input
+                  className="sign__input"
                   type="email"
                   name="email"
                   placeholder="E-mail"
@@ -57,13 +60,14 @@ class Login extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.email && <span className="">{error.email}</span>}
+                {error.email && <span className="sign__error">{error.email}</span>}
               </label>
             </div>
-            <div className="form__group">
+            <div>
               <label>
-                Password
+                <p className="sign__label">Password</p>
                 <input
+                  className="sign__input"
                   type="password"
                   name="password"
                   placeholder="Password"
@@ -71,11 +75,11 @@ class Login extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.password && <span className="">{error.password}</span>}
+                {error.password && <span className="sign__error">{error.password}</span>}
               </label>
             </div>
-            <div className="form__group">
-              <input type="submit" />
+            <div className="sign__submit-wrapper">
+              <input className="sign__submit" type="submit" value="Submit" />
             </div>
           </form>
         </div>

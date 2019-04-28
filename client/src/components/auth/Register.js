@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
 
+import './Sign.sass';
+
 class Register extends Component {
   state = {
     name: '',
@@ -48,14 +50,15 @@ class Register extends Component {
     const { error } = this.state;
 
     return (
-      <div className="register">
+      <div className="sign">
         <div className="container">
-          <h1>Sign Up</h1>
-          <form className="form" onSubmit={this.onSubmit}>
-            <div className="form__group">
+          <h1 className="sign__header">Sign Up</h1>
+          <form className="sign__form" onSubmit={this.onSubmit}>
+            <div>
               <label>
-                Name
+                <p className="sign__label">Name</p>
                 <input
+                  className="sign__input"
                   type="text"
                   name="name"
                   placeholder="Name"
@@ -63,13 +66,14 @@ class Register extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.name && <span className="">{error.name}</span>}
+                {error.name && <span className="sign__error">{error.name}</span>}
               </label>
             </div>
-            <div className="form__group">
+            <div>
               <label>
-                E-mail
+                <p className="sign__label">E-mail</p>
                 <input
+                  className="sign__input"
                   type="email"
                   name="email"
                   placeholder="E-mail"
@@ -77,13 +81,14 @@ class Register extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.email && <span className="">{error.email}</span>}
+                {error.email && <span className="sign__error">{error.email}</span>}
               </label>
             </div>
-            <div className="form__group">
+            <div>
               <label>
-                Password
+                <p className="sign__label">Password</p>
                 <input
+                  className="sign__input"
                   type="password"
                   name="password"
                   placeholder="Password"
@@ -91,13 +96,14 @@ class Register extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.password && <span className="">{error.password}</span>}
+                {error.password && <span className="sign__error">{error.password}</span>}
               </label>
             </div>
-            <div className="form__group">
+            <div>
               <label>
-                Confirm password
+                <p className="sign__label">Confirm password</p>
                 <input
+                  className="sign__input"
                   type="password"
                   name="password2"
                   placeholder="Confirm password"
@@ -105,11 +111,11 @@ class Register extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.password2 && <span className="">{error.password2}</span>}
+                {error.password2 && <span className="sign__error">{error.password2}</span>}
               </label>
             </div>
-            <div className="form__group">
-              <input type="submit" />
+            <div className="sign__submit-wrapper">
+              <input className="sign__submit" type="submit" value="Submit" />
             </div>
           </form>
         </div>
