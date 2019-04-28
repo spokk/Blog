@@ -2,7 +2,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { setAuthToken } from '../utils/setAuthToken';
 import { logoutUser, setUser } from './authActions';
-import { ERROR, GET_USER, GET_USERS } from './types';
+import { ERROR, GET_USER, GET_USERS, CLEAR_USER } from './types';
 
 //Get user
 export const getUser = id => dispatch => {
@@ -20,6 +20,12 @@ export const getUser = id => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+export const clearUser = () => dispatch => {
+  dispatch({
+    type: CLEAR_USER
+  });
 };
 
 // Delete user

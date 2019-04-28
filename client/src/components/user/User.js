@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUser, deleteUser } from '../../actions/userActions';
+import { getUser, deleteUser, clearUser } from '../../actions/userActions';
 
 import './User.sass';
 
@@ -40,6 +40,10 @@ class User extends Component {
         date
       });
     } else this.props.history.push('/error');
+  }
+
+  componentWillUnmount() {
+    this.props.clearUser();
   }
 
   render() {
@@ -84,6 +88,7 @@ class User extends Component {
 User.propTypes = {
   getUser: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
+  clearUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   error: PropTypes.object
@@ -97,5 +102,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUser, deleteUser }
+  { getUser, deleteUser, clearUser }
 )(withRouter(User));
