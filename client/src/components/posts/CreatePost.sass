@@ -1,0 +1,46 @@
+.create-post
+    max-width: 720px
+    margin: 0 auto
+    &__header
+        text-align: center
+        font-size: 24px
+    &__header-label, &__text-label
+        font-size: 16px
+        margin: 10px 0 4px 8px
+        font-weight: 500
+    &__header-input, &__text-input
+        padding: 10px
+        margin-bottom: 3px
+        font-size: 16px
+        width: 100%
+        border-radius: 8px
+        display: block
+        border: 1px solid rgb(169, 169, 169)
+    &__text-input
+        min-width: 260px
+        min-height: 160px
+        max-width: 720px
+    &__error
+        color: red
+        font-weight: 500
+        text-transform: capitalize
+        margin-bottom: 10px
+        margin-left: 8px
+        display: block
+    &__submit-wrapper
+        text-align: right
+    &__submit
+        background-color: #38a9ff
+        border: none
+        border-radius: 8px
+        padding: 10px 32px
+        color: #fff
+        cursor: pointer
+        margin-top: 10px
+        &:hover
+            color: #515365
+        &:disabled
+            opacity: 0.4
+            cursor: not-allowed
+            &:hover
+            color: #fff

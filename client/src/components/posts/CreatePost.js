@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createPost } from '../../actions/postActions';
 
+import './CreatePost.sass';
+
 class CreatePost extends Component {
   state = {
     header: '',
@@ -42,13 +44,14 @@ class CreatePost extends Component {
     const { error } = this.state;
     const isDisabled = this.state.text.length < 10 || this.state.header.length < 5 ? 'disabled' : false;
     return (
-      <div className="create">
-        <h1>Create a new post</h1>
-        <form onSubmit={this.onSubmit}>
+      <div className="create-post">
+        <h1 className="create-post__header">Create a new post</h1>
+        <form className="create-post__form" onSubmit={this.onSubmit}>
           <div className="form__group">
             <label>
-              <p>Header</p>
+              <p className="create-post__header-label">Header</p>
               <input
+                className="create-post__header-input"
                 type="text"
                 name="header"
                 placeholder="Enter a header"
@@ -58,13 +61,14 @@ class CreatePost extends Component {
                 minLength="4"
                 required
               />
-              {error.header && <span className="">{error.header}</span>}
+              {error.header && <span className="create-post__error">{error.header}</span>}
             </label>
           </div>
           <div className="form__group">
             <label>
-              <p>Text</p>
+              <p className="create-post__text-label">Text</p>
               <textarea
+                className="create-post__text-input"
                 rows="10"
                 cols="45"
                 name="text"
@@ -75,11 +79,11 @@ class CreatePost extends Component {
                 onChange={this.onChange}
                 required
               />
-              {error.text && <span className="">{error.text}</span>}
+              {error.text && <span className="create-post__error">{error.text}</span>}
             </label>
           </div>
-          <div className="form__group">
-            <input type="submit" disabled={isDisabled} />
+          <div className="form__group create-post__submit-wrapper">
+            <input className="create-post__submit" type="submit" disabled={isDisabled} value="Submit" />
           </div>
         </form>
       </div>
