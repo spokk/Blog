@@ -107,7 +107,13 @@ class Header extends Component {
                 {isAuth ? userLinks : guestLinks}
               </ul>
               <div className="navbar__search-wrapper">
-                <input type="text" className="navbar__search" name="search" onChange={this.onChange} />
+                <input
+                  type="text"
+                  className="navbar__search"
+                  name="search"
+                  onChange={this.onChange}
+                  placeholder="Search..."
+                />
                 <button
                   className="navbar__search-btn button--round"
                   onClick={this.onSearch}

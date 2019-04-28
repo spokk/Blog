@@ -34,32 +34,33 @@
         align-items: center
         position: relative
     &__avatar
-        min-height: 160px
-        min-width: 160px
-        max-height: 160px
-        max-width: 160px
-        width: 100%
-        height: 100%
+        width: 150px
+        height: 150px
+        display: block
+        margin: 0 auto 5px
         border-radius: 50%
         object-fit: cover
-        margin-right: 20px
         -webkit-box-shadow: 0px 6px 12px -2px rgba(0,0,0,0.53)
         box-shadow: 0px 6px 12px -2px rgba(0,0,0,0.53)
         @media (max-width: 667px)
-            display: none
-
+            width: 50px
+            height: 50px
+        &-wrapper
+            margin-right: 20px
+    &__name
+        font-weight: 500
+        text-align: center
+        margin: 0
     &__info
         align-self: flex-start
+        width: 100%
     &__header
         margin: 0
         margin-bottom: 8px
         color: #515365
         text-transform: capitalize
-        width: fit-content
-        padding-left: 3px
-        border-bottom: 1px solid
-        border-left: 1px solid
-        border-bottom-left-radius: 6px
+        text-align: center
+        word-break: break-word
     &__text
         max-height: 85px
         overflow: hidden
@@ -78,6 +79,7 @@
         vertical-align: baseline
         &-item
             letter-spacing: 2px
+            display: flex
     &__likes
         display: flex
         align-items: center

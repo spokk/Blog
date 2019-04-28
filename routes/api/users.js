@@ -82,7 +82,13 @@ router.post('/login', (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // User Matched
-        const payload = { id: user.id, name: user.name, email: user.email, avatar: user.avatar }; //JWT payload
+        const payload = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          role: user.role
+        }; //JWT payload
 
         // Sign Token
         jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
@@ -153,7 +159,7 @@ router.get('/:id', (req, res) => {
 // @desc Edit user by id
 // @access Private
 router.post('/:id', checkAuth, (req, res) => {
-  // console.log(req.body);
+  console.log('req.user', req.user.role);
   const { errors, isValid } = validateProfileInput(req.body);
 
   //Check validation
@@ -165,6 +171,7 @@ router.post('/:id', checkAuth, (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
+    role: req.user.role,
     avatar: req.body.avatar ? req.body.avatar : '',
     about: req.body.about ? req.body.about : ''
   };
@@ -184,7 +191,13 @@ router.post('/:id', checkAuth, (req, res) => {
         if (error) return res.status(404).json({ upadte: 'error' });
 
         // New payload for jwt
-        const payload = { id: req.user.id, name: newInfo.name, email: newInfo.email, avatar: newInfo.avatar }; //JWT payload
+        const payload = {
+          id: req.user.id,
+          name: newInfo.name,
+          email: newInfo.email,
+          avatar: newInfo.avatar,
+          role: newInfo.role
+        }; //JWT payload
         // Sign Token
         jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) =>
           res.status(200).json({ token: 'Bearer ' + token })
@@ -198,8 +211,8 @@ router.post('/:id', checkAuth, (req, res) => {
 // @desc    Delete user and profile
 // @access  Private
 router.delete('/:id', checkAuth, (req, res) => {
-  if (req.params.id === req.user.id) {
-    User.findOneAndRemove({ _id: req.user.id })
+  if (req.params.id === req.user.id || req.user.role === 'admin') {
+    User.findOneAndRemove({ _id: req.params.id })
       .then(user => res.json({ success: true }))
       .catch(err => res.json({ error: err }));
   } else return res.status(404).json({ user: 'Auth fail' });

@@ -1,0 +1,81 @@
+.single-post
+    background: #fff
+    border: 1px solid #e6ecf5
+    border-radius: 8px
+    padding: 15px
+    &__credentials
+        display: flex
+        align-items: center
+        height: 50px
+    &__avatar
+        width: 50px
+        height: 50px
+        display: block
+        border-radius: 50%
+        margin-right: 15px
+        object-fit: cover
+    &__name
+        font-weight: 700
+        font-size: 18px
+        text-decoration: none
+        color: #000
+        display: block
+        margin: 0 0 3px 0
+        &:hover
+            text-decoration: underline
+    &__date
+        margin: 0
+        font-size: 12px
+    &__info
+        width: 100%
+        max-width: 720px
+        margin: 0 auto
+    &__header
+        font-size: 28px
+        text-transform: capitalize
+        text-align: center
+    &__text
+        font-size: 22px
+        line-height: 1.8
+        letter-spacing: 0.6px
+        text-indent: 36px
+        white-space: pre-line
+        word-wrap: break-word
+        &::first-letter
+            text-transform: uppercase
+            font-size: 24px
+            font-weight: 500
+    &__buttons
+        display: flex
+        align-items: center
+        justify-content: flex-end
+    &__likes
+        margin: 0 6px
+        font-weight: 700
+    &__like-btn
+        background-color: #fff
+        font-size: 20px
+        color: #17ba00
+        &:hover
+            background-color: #eee
+    &__dislike-btn
+        background-color: #fff
+        font-size: 20px
+        color: #ba0000
+        &:hover
+            background-color: #eee
+    &__edit-btn
+        background-color: #fff
+        font-size: 20px
+        margin: 0 6px
+        color: #1e69ff
+        &:hover
+            background-color: #eee
+    &__delete-btn
+        background-color: #fff
+        font-size: 20px
+        opacity: 0.5
+        &:hover
+            background-color: #eee
+            opacity: 1
+

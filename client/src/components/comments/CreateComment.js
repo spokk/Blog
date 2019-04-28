@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createComment } from '../../actions/postActions';
 
+import './CreateComment.sass';
+
 class CreateComment extends Component {
   state = {
     comment: '',
@@ -40,25 +42,24 @@ class CreateComment extends Component {
     const { error } = this.state;
     const isDisabled = this.state.comment.length < 10 ? 'disabled' : false;
     return (
-      <div>
-        <h3>Create comment</h3>
-        <form onSubmit={this.onSubmit}>
+      <div className="create-comment">
+        <h3 className="create-comment__header">Create comment</h3>
+        <form className="form create-comment__form" onSubmit={this.onSubmit}>
           <div className="form__group">
             <textarea
-              rows="10"
-              cols="45"
+              className="create-comment__textarea"
               name="comment"
               maxLength="3000"
               minLength="10"
-              placeholder="Text here"
+              placeholder="Write your comment here"
               value={this.state.comment}
               onChange={this.onChange}
               required
             />
-            {error.text && <span className="">{error.text}</span>}
+            {error.text && <span className="create-comment__error">{error.text}</span>}
           </div>
-          <div className="form__group">
-            <input type="submit" disabled={isDisabled} />
+          <div className="form__group create-comment__submit-wrapper">
+            <input type="submit" className="create-comment__submit" disabled={isDisabled} value="Submit" />
           </div>
         </form>
       </div>

@@ -19,7 +19,7 @@ import Users from './components/user/Users';
 import Edit from './components/user/Edit';
 import CreatePost from './components/posts/CreatePost';
 import EditPost from './components/posts/EditPost';
-import Post from './components/posts/Post';
+import SinglePost from './components/SinglePost/SinglePost';
 import Search from './components/Search/Search';
 import Contacts from './components/Contacts/Contacts';
 import About from './components/About/About';
@@ -39,7 +39,6 @@ if (localStorage.token) {
   if (decoded.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser());
-    // window.location.href = '/login';
   }
 }
 
@@ -60,7 +59,7 @@ class App extends Component {
                 <Route exact path="/edit-user" component={Edit} />
                 <Route exact path="/create" component={CreatePost} />
                 <Route exact path="/edit/:id" component={EditPost} />
-                <Route exact path="/post/:id" component={Post} />
+                <Route exact path="/post/:id" component={SinglePost} />
                 <Route exact path="/contacts" component={Contacts} />
                 <Route exact path="/about" component={About} />
                 <Route exact path="/search" component={Search} />

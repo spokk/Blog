@@ -87,7 +87,7 @@ router.get('/search', (req, res) => {
       if (response.length === 0) {
         return res.status(404).json({ error: 'Nothing ... try something else' });
       }
-      res.json(response);
+      return res.json(response);
     })
     .catch(err => res.status(404).json({ error: 'Something went wrong ... ' }));
 });
@@ -105,18 +105,15 @@ router.get('/:id', (req, res) => {
 // @desc Delete post by id
 // @access Private
 router.delete('/:id', checkAuth, (req, res) => {
-  User.findOne({ user: req.user.id }).then(user => {
-    Post.findById(req.params.id)
-      .then(post => {
-        if (post.user.toString() !== req.user.id) {
-          return res.status(401).json({ error: 'No authorized' });
-        }
-
+  Post.findById(req.params.id)
+    .then(post => {
+      if (post.user.toString() === req.user.id || req.user.role === 'admin') {
         // Delete post
-        post.remove().then(() => res.json({ success: true }));
-      })
-      .catch(err => res.status(404).json({ error: 'Post not found' }));
-  });
+        return post.remove().then(() => res.json({ success: true }));
+      }
+      return res.status(401).json({ error: 'No authorized' });
+    })
+    .catch(err => res.status(404).json({ error: 'Post not found' }));
 });
 
 // @route POST api/posts/like/:id

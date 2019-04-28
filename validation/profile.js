@@ -29,10 +29,6 @@ module.exports = function validateProfileInput(data) {
       errors.password2 = 'Passwords must match';
     }
   }
-  //   if(isEmpty(data.avatar)){
-  //         errors.avatar
-  //   }
-
   return {
     errors,
     isValid: !Object.keys(errors).length //if errors obj is empty - return true

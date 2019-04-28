@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPosts } from '../../actions/postActions';
+
+import PostItem from './PostItem';
 
 import './PostsFeed.sass';
 
@@ -37,35 +39,10 @@ class PostsFeed extends Component {
 
   render() {
     const { posts } = this.state;
-    const postFeed = posts.map((post, i) => {
-      const { text, avatar, likes, comments, header, _id } = post;
-      const defaultAvatar = 'https://bizraise.pro/wp-content/uploads/2014/09/no-avatar-300x300.png';
-      return (
-        <Link to={`/post/${_id}`} key={i} className="post">
-          <div className="post__wrapper">
-            <img src={avatar.length ? avatar : defaultAvatar} className="post__avatar" alt="avatar" />
-            <div className="post__info">
-              <h2 className="post__header">{header}</h2>
-              <p className="post__text">{text}</p>
-              <div className="post__stats">
-                <span className="post__stats-item">
-                  {likes.length}
-                  <i className="far fa-thumbs-up" />
-                </span>
-                <span className="post__stats-item">
-                  {comments.length}
-                  <i className="far fa-comments" />
-                </span>
-              </div>
-            </div>
-          </div>
-        </Link>
-      );
-    });
-
-    return (
+    const postsFeed = posts.map((post, i) => <PostItem post={post} key={i} />);
+    const postsWrap = (
       <>
-        <div className="posts__wrapper">{postFeed}</div>
+        <div className="posts__wrapper">{postsFeed}</div>
         <div>
           <button onClick={this.showMore} className="posts__show-more button--round">
             <i className="fas fa-ellipsis-h" />
@@ -74,6 +51,7 @@ class PostsFeed extends Component {
         </div>
       </>
     );
+    return posts.length > 0 ? postsWrap : <p>Empty</p>;
   }
 }
 

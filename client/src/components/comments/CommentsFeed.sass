@@ -1,0 +1,53 @@
+.comments
+    max-width: 720px
+    margin: 0 auto
+    &__count
+        font-size: 24px
+        margin: 12px 0
+    &__feed
+
+.comment
+    &__item
+        background-color: #fff
+        border: 1px solid #e6ecf5
+        border-radius: 8px
+        padding: 10px 75px 10px 10px
+        margin-bottom: 15px
+        position: relative
+    &__credentials
+        display: flex
+        align-items: center
+        height: 50px
+    &__avatar
+        width: 50px
+        height: 50px
+        display: block
+        border-radius: 50%
+        margin-right: 15px
+        object-fit: cover
+    &__name
+        font-weight: 700
+        font-size: 18px
+        text-decoration: none
+        color: #000
+        display: block
+        margin: 0 0 3px 0
+        &:hover
+            text-decoration: underline
+    &__date
+        margin: 0
+        font-size: 12px
+    &__delete-btn
+        background-color: #fff
+        font-size: 20px
+        opacity: 0.5
+        position: absolute
+        right: 5px
+        top: 5px
+        &:hover
+            background-color: #eee
+            opacity: 1
+    &__info
+        padding-left: 55px
+    &__comment
+        word-wrap: break-word

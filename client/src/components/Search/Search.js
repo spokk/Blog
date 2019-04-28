@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { searchPosts } from '../../actions/searchActions';
 
-import SearchItem from './SearchItem';
+import PostItem from '../posts/PostItem';
 
 class Search extends Component {
   state = {
@@ -22,8 +22,8 @@ class Search extends Component {
     }
   }
   render() {
-    const searchFeed = this.state.response.map(post => <SearchItem post={post} key={post._id} />);
-    return this.state.response.length > 0 ? searchFeed : <p>Empty</p>;
+    const searchFeed = this.state.response.map((post, i) => <PostItem post={post} key={i} />);
+    return this.state.response.length > 0 ? <div className="posts__wrapper">{searchFeed}</div> : <p>Empty</p>;
   }
 }
 
