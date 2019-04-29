@@ -16,3 +16,5 @@ export const SEARCH_POSTS = 'SEARCH_POSTS';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const SET_LOADING = 'SET_LOADING';
+export const UNSET_LOADING = 'UNSET_LOADING';

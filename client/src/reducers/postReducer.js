@@ -6,11 +6,14 @@ import {
   DISLIKE_POST,
   EDIT_POST,
   CREATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  SET_LOADING,
+  UNSET_LOADING
 } from '../actions/types';
 const initialState = {
   posts: [],
-  post: {}
+  post: {},
+  loading: false
 };
 
 export default function(state = initialState, action) {
@@ -18,12 +21,14 @@ export default function(state = initialState, action) {
     case GET_POSTS:
       return {
         ...state,
-        posts: action.payload
+        posts: [...state.posts, ...action.payload],
+        loading: false
       };
     case GET_POST:
       return {
         ...state,
-        post: action.payload
+        post: action.payload,
+        loading: false
       };
     case LIKE_POST:
       return {
@@ -54,6 +59,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         post: action.payload
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+    case UNSET_LOADING:
+      return {
+        ...state,
+        loading: false
       };
     default:
       return state;

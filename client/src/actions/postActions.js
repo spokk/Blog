@@ -10,11 +10,14 @@ import {
   EDIT_POST,
   CLEAR_ERRORS,
   CREATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  SET_LOADING,
+  UNSET_LOADING
 } from './types';
 
 //Get posts
 export const getPosts = page => dispatch => {
+  dispatch({ type: SET_LOADING });
   axios
     .get(`/api/posts/page/${page}`)
     .then(res => {
@@ -23,12 +26,13 @@ export const getPosts = page => dispatch => {
         payload: res.data
       });
     })
-    .catch(err =>
+    .catch(err => {
+      dispatch({ type: UNSET_LOADING });
       dispatch({
         type: ERROR,
         payload: err.response
-      })
-    );
+      });
+    });
 };
 
 //Get post
