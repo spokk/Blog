@@ -159,7 +159,6 @@ router.get('/:id', (req, res) => {
 // @desc Edit user by id
 // @access Private
 router.post('/:id', checkAuth, (req, res) => {
-  console.log('req.user', req.user.role);
   const { errors, isValid } = validateProfileInput(req.body);
 
   //Check validation
