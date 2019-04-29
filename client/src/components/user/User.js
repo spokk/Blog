@@ -39,7 +39,7 @@ class User extends Component {
         id,
         date
       });
-    } else this.props.history.push('/error');
+    } else this.props.history.replace('/error');
   }
 
   componentWillUnmount() {

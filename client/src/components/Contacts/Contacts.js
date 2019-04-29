@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
+import './Contacts.sass';
+
 class Contacts extends Component {
   static defaultProps = {
     center: {
@@ -12,15 +14,32 @@ class Contacts extends Component {
 
   render() {
     return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: '60vh', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyDxK9QeYSK0YQf8J1CrkQgjvB5uqizksz0' }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
-        </GoogleMapReact>
+      <div className="contacts">
+        <address className="address">
+          <h6 className="address__header">Contacts</h6>
+          <p className="address__label">
+            Telephone number:
+            <a className="address__tel" href="tel:847-555-5555">
+              847-555-5555
+            </a>
+          </p>
+          <p className="address__label">Address: Lorem ipsum dolor.</p>
+          <p className="address__label">Work hours: 9.30 - 6.30</p>
+          <p className="address__label">
+            E-mail:
+            <a className="address__email" href="mailto:game1life1@gmail.com">
+              game1life1@gmail.com
+            </a>
+          </p>
+        </address>
+        <div className="contacts__map-wrapper">
+          <GoogleMapReact
+            className="contacts__map"
+            bootstrapURLKeys={{ key: 'AIzaSyDxK9QeYSK0YQf8J1CrkQgjvB5uqizksz0' }}
+            defaultCenter={this.props.center}
+            defaultZoom={this.props.zoom}
+          />
+        </div>
       </div>
     );
   }

@@ -42,7 +42,7 @@ class SinglePost extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.error.error === 'Post not found') {
-      this.props.history.push('/error');
+      this.props.history.replace('/error');
     } else if (nextProps.posts.post) {
       const { text, avatar, likes, comments, date, header, user, name } = nextProps.posts.post;
       this.setState({

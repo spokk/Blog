@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUser, editUser } from '../../actions/userActions';
 
+import '../auth/Sign.sass';
+
 class Edit extends Component {
   state = {
     name: '',
@@ -63,14 +65,15 @@ class Edit extends Component {
     const { error } = this.state;
 
     return (
-      <div className="register">
+      <div className="sign">
         <div className="container">
-          <h1>Edit user</h1>
-          <form className="form" onSubmit={this.onSubmit}>
+          <h1 className="sign__header">Edit user</h1>
+          <form className="sign__form" onSubmit={this.onSubmit}>
             <div className="form__group">
               <label>
-                Name
+                <p className="sign__label">Name</p>
                 <input
+                  className="sign__input"
                   type="text"
                   name="name"
                   placeholder="Name"
@@ -78,13 +81,14 @@ class Edit extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.name && <span className="">{error.name}</span>}
+                {error.name && <span className="sign__error">{error.name}</span>}
               </label>
             </div>
             <div className="form__group">
               <label>
-                E-mail
+                <p className="sign__label">E-mail</p>
                 <input
+                  className="sign__input"
                   type="email"
                   name="email"
                   placeholder="E-mail"
@@ -92,39 +96,42 @@ class Edit extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.email && <span className="">{error.email}</span>}
+                {error.email && <span className="sign__error">{error.email}</span>}
               </label>
             </div>
             <div className="form__group">
               <label>
-                Avatar
+                <p className="sign__label">Avatar URL</p>
                 <input
+                  className="sign__input"
                   type="text"
                   name="avatar"
-                  placeholder="Name"
+                  placeholder="https://example.com/img.png"
                   value={this.state.avatar}
                   onChange={this.onChange}
                 />
-                {error.avatar && <span className="">{error.avatar}</span>}
+                {error.avatar && <span className="sign__error">{error.avatar}</span>}
               </label>
             </div>
             <div className="form__group">
               <label>
-                About
+                <p className="sign__label">About you</p>
                 <input
+                  className="sign__input"
                   type="text"
                   name="about"
-                  placeholder="Name"
+                  placeholder="Tell something about yourself..."
                   value={this.state.about}
                   onChange={this.onChange}
                 />
-                {error.about && <span className="">{error.about}</span>}
+                {error.about && <span className="sign__error">{error.about}</span>}
               </label>
             </div>
             <div className="form__group">
               <label>
-                Password
+                <p className="sign__label">Password</p>
                 <input
+                  className="sign__input"
                   type="password"
                   name="password"
                   placeholder="Password"
@@ -132,13 +139,14 @@ class Edit extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.password && <span className="">{error.password}</span>}
+                {error.password && <span className="sign__error">{error.password}</span>}
               </label>
             </div>
             <div className="form__group">
               <label>
-                Confirm password
+                <p className="sign__label">Confirm password</p>
                 <input
+                  className="sign__input"
                   type="password"
                   name="password2"
                   placeholder="Confirm password"
@@ -146,11 +154,11 @@ class Edit extends Component {
                   onChange={this.onChange}
                   required
                 />
-                {error.password2 && <span className="">{error.password2}</span>}
+                {error.password2 && <span className="sign__error">{error.password2}</span>}
               </label>
             </div>
-            <div className="form__group">
-              <input type="submit" />
+            <div className="sign__submit-wrapper">
+              <input className="sign__submit" type="submit" value="Submit" />
             </div>
           </form>
         </div>

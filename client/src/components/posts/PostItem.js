@@ -8,7 +8,7 @@ export default function PostItem(props) {
     <Link to={`/post/${_id}`} className="post">
       <div className="post__wrapper">
         <div className="post__avatar-wrapper">
-          <img src={avatar.length ? avatar : defaultAvatar} className="post__avatar" alt="avatar" />
+          <img className="post__avatar" src={avatar.length ? avatar : defaultAvatar} alt="avatar" />
           <p className="post__name">{name}</p>
         </div>
         <div className="post__info">
