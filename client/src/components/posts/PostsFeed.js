@@ -41,22 +41,25 @@ class PostsFeed extends Component {
 
   render() {
     const { posts } = this.state;
+    const { loading } = this.props.posts;
     const postsFeed = posts.map((post, i) => <PostItem post={post} key={i} />);
+    const emptyMsg = <h4 className="posts__empty">Sorry, no posts have found. Write your own!</h4>;
+    const showMoreBtn = (
+      <div>
+        <button onClick={this.showMore} className="posts__show-more button--round">
+          <i className="fas fa-ellipsis-h" />
+          <span className="ally">show more</span>
+        </button>
+      </div>
+    );
     const postsWrap =
-      !this.props.posts.loading && posts.length === 0 ? (
-        <h2 className="posts__empty">Sorry, no posts. Write your own!</h2>
+      !loading && posts.length === 0 ? (
+        emptyMsg
       ) : (
         <>
           <div className="posts__wrapper">{postsFeed}</div>
-          {this.props.posts.loading && <Spinner />}
-          {!this.props.posts.loading && (
-            <div>
-              <button onClick={this.showMore} className="posts__show-more button--round">
-                <i className="fas fa-ellipsis-h" />
-                <span className="ally">show more</span>
-              </button>
-            </div>
-          )}
+          {loading && <Spinner />}
+          {!loading && showMoreBtn}
         </>
       );
     return postsWrap;
