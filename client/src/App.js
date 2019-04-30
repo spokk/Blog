@@ -24,6 +24,8 @@ import Contacts from './components/Contacts/Contacts';
 import About from './components/About/About';
 import Footer from './components/layout/Footer';
 
+import Slider from './components/Slider/Slider';
+
 //Check for token
 if (localStorage.token) {
   // Set token
@@ -62,6 +64,7 @@ class App extends Component {
                 <Route exact path="/contacts" component={Contacts} />
                 <Route exact path="/about" component={About} />
                 <Route exact path="/search" component={Search} />
+                <Route exact path="/slider" component={Slider} />
                 <Route component={Error} />
               </Switch>
             </main>

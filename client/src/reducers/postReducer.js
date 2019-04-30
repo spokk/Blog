@@ -11,6 +11,7 @@ import {
   UNSET_LOADING,
   CLEAR_POSTS_STORE
 } from '../actions/types';
+
 const initialState = {
   posts: [],
   post: {

@@ -4,6 +4,7 @@ export const GET_USER = 'GET_USER';
 export const CLEAR_USER = 'CLEAR_USER';
 export const GET_USERS = 'GET_USERS';
 export const GET_POSTS = 'GET_POSTS';
+export const GET_POSTS_SLIDER = 'GET_POSTS_SLIDER';
 export const GET_POST = 'GET_POST';
 export const LIKE_POST = 'LIKE_POST';
 export const DISLIKE_POST = 'DISLIKE_POST';

@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   ERROR,
   GET_POSTS,
+  GET_POSTS_SLIDER,
   CREATE_POST,
   GET_POST,
   DELETE_POST,
@@ -29,6 +30,24 @@ export const getPosts = page => dispatch => {
     })
     .catch(err => {
       dispatch({ type: UNSET_LOADING });
+      dispatch({
+        type: ERROR,
+        payload: err.response
+      });
+    });
+};
+
+//Get posts
+export const getPostsForSlider = () => dispatch => {
+  axios
+    .get(`/api/posts`)
+    .then(res => {
+      dispatch({
+        type: GET_POSTS_SLIDER,
+        payload: res.data
+      });
+    })
+    .catch(err => {
       dispatch({
         type: ERROR,
         payload: err.response

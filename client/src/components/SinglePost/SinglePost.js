@@ -126,6 +126,7 @@ SinglePost.propTypes = {
   dislikePost: PropTypes.func.isRequired,
   deletePostById: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  posts: PropTypes.object.isRequired,
   error: PropTypes.object
 };
 

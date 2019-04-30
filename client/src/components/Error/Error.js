@@ -12,6 +12,7 @@ class Error extends Component {
   componentDidMount() {
     this.props.clearErrors();
   }
+
   render() {
     return (
       <div className="error">

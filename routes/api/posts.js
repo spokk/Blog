@@ -31,6 +31,17 @@ router.post('/', checkAuth, (req, res) => {
   newPost.save().then(post => res.json(post));
 });
 
+// @route GET api/posts/
+// @desc Get all posts
+// @access Public
+router.get('/', (req, res) => {
+  Post.find()
+    .sort({ date: -1 })
+    .limit(6)
+    .then(posts => res.json(posts))
+    .catch(err => res.status(404).json({ posts: 'Posts not found' }));
+});
+
 // @route GET api/posts/search?query=
 // @desc Search posts route
 // @access Public
@@ -97,8 +108,8 @@ router.post('/edit/:id', checkAuth, (req, res) => {
   });
 });
 
-// @route GET api/posts
-// @desc Get all posts
+// @route GET api/posts/page/:page
+// @desc Get all posts by page
 // @access Public
 router.get('/page/:page', (req, res) => {
   let page = parseInt(req.params.page);

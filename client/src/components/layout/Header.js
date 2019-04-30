@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
 import { searchPosts } from '../../actions/searchActions';
 
+import Slider from '../../components/Slider/Slider';
+
 import './Header.sass';
 
 class Header extends Component {
@@ -16,11 +18,13 @@ class Header extends Component {
   onLogout = () => {
     this.props.logoutUser(this.props.history);
   };
+
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
   };
+
   onSearch = () => {
     this.props.searchPosts(this.state.search, this.props.history);
   };
@@ -78,6 +82,7 @@ class Header extends Component {
     return (
       <header className="header">
         <div className="container">
+          <Slider />
           <div className="header__wrapper">
             <nav className="navbar">
               <button className="navbar__mobile-btn header-btn button--round" onClick={this.onMenuClick}>
