@@ -12,7 +12,8 @@ import {
   CREATE_COMMENT,
   DELETE_COMMENT,
   SET_LOADING,
-  UNSET_LOADING
+  UNSET_LOADING,
+  CLEAR_POSTS_STORE
 } from './types';
 
 //Get posts
@@ -37,6 +38,7 @@ export const getPosts = page => dispatch => {
 
 //Get post
 export const getPostById = id => dispatch => {
+  dispatch({ type: SET_LOADING });
   axios
     .get(`/api/posts/${id}`)
     .then(res =>
@@ -45,12 +47,13 @@ export const getPostById = id => dispatch => {
         payload: res.data
       })
     )
-    .catch(err =>
+    .catch(err => {
+      dispatch({ type: UNSET_LOADING });
       dispatch({
         type: ERROR,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 //Delete post
@@ -82,12 +85,12 @@ export const createPost = (postData, history) => dispatch => {
       });
       history.push('/');
     })
-    .catch(err =>
+    .catch(err => {
       dispatch({
         type: ERROR,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 //Like post
@@ -183,5 +186,11 @@ export const deleteComment = (postId, commentId) => dispatch => {
 export const clearErrors = () => dispatch => {
   return dispatch({
     type: CLEAR_ERRORS
+  });
+};
+
+export const clearPosts = () => dispatch => {
+  return dispatch({
+    type: CLEAR_POSTS_STORE
   });
 };

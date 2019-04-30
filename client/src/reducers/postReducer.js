@@ -8,7 +8,8 @@ import {
   CREATE_COMMENT,
   DELETE_COMMENT,
   SET_LOADING,
-  UNSET_LOADING
+  UNSET_LOADING,
+  CLEAR_POSTS_STORE
 } from '../actions/types';
 const initialState = {
   posts: [],
@@ -41,10 +42,7 @@ export default function(state = initialState, action) {
         post: action.payload
       };
     case CREATE_POST:
-      return {
-        ...state,
-        posts: action.payload
-      };
+      return state;
     case EDIT_POST:
       return {
         ...state,
@@ -68,6 +66,13 @@ export default function(state = initialState, action) {
     case UNSET_LOADING:
       return {
         ...state,
+        loading: false
+      };
+    case CLEAR_POSTS_STORE:
+      return {
+        ...state,
+        posts: [],
+        post: {},
         loading: false
       };
     default:

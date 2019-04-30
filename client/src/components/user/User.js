@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUser, deleteUser, clearUser } from '../../actions/userActions';
 
+import Spinner from '../Spinner/Spinner';
+
 import './User.sass';
 
 class User extends Component {
@@ -39,7 +41,9 @@ class User extends Component {
         id,
         date
       });
-    } else this.props.history.replace('/error');
+    } else if (nextProps.user.user === null && !nextProps.user.loading) {
+      this.props.history.replace('/error');
+    }
   }
 
   componentWillUnmount() {
@@ -51,7 +55,7 @@ class User extends Component {
     const defaultAvatar = 'https://bizraise.pro/wp-content/uploads/2014/09/no-avatar-300x300.png';
     const isAdmin = this.props.auth.user && this.props.auth.user.role === 'admin';
     const isAuth = this.props.auth.isAuth && this.props.auth.user.id === this.props.match.params.id;
-    return (
+    const profile = (
       <div className="profile">
         <h1 className="profile__header">Profile</h1>
         <img className="profile__avatar" src={avatar.length ? avatar : defaultAvatar} alt="avatar" />
@@ -82,6 +86,8 @@ class User extends Component {
         </div>
       </div>
     );
+
+    return this.props.user.loading ? <Spinner /> : profile;
   }
 }
 

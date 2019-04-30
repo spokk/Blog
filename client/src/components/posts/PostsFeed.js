@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getPosts } from '../../actions/postActions';
+import { getPosts, clearPosts } from '../../actions/postActions';
 
 import PostItem from './PostItem';
 
@@ -28,6 +28,10 @@ class PostsFeed extends Component {
         posts: nextProps.posts.posts
       });
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearPosts();
   }
 
   showMore = () => {
@@ -79,5 +83,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getPosts }
+  { getPosts, clearPosts }
 )(withRouter(PostsFeed));

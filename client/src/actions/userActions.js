@@ -2,10 +2,11 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import { setAuthToken } from '../utils/setAuthToken';
 import { logoutUser, setUser } from './authActions';
-import { ERROR, GET_USER, GET_USERS, CLEAR_USER } from './types';
+import { ERROR, GET_USER, GET_USERS, CLEAR_USER, SET_USER_LOADING, UNSET_USER_LOADING } from './types';
 
 //Get user
 export const getUser = id => dispatch => {
+  dispatch({ type: SET_USER_LOADING });
   axios
     .get(`/api/users/${id}`)
     .then(res => {
@@ -14,12 +15,13 @@ export const getUser = id => dispatch => {
         payload: res.data
       });
     })
-    .catch(err =>
+    .catch(err => {
+      dispatch({ type: UNSET_USER_LOADING });
       dispatch({
         type: ERROR,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 export const clearUser = () => dispatch => {
@@ -69,6 +71,7 @@ export const editUser = (id, userData, history) => dispatch => {
 
 //Get user
 export const getUsers = () => dispatch => {
+  dispatch({ type: SET_USER_LOADING });
   axios
     .get('/api/users/all')
     .then(res => {
@@ -77,10 +80,11 @@ export const getUsers = () => dispatch => {
         payload: res.data
       });
     })
-    .catch(err =>
+    .catch(err => {
+      dispatch({ type: UNSET_USER_LOADING });
       dispatch({
         type: ERROR,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };

@@ -8,6 +8,8 @@ import CommentsFeed from '../comments/CommentsFeed';
 import CreateComment from '../comments/CreateComment';
 import SinglePostItem from './SinglePostItem';
 
+import Spinner from '../Spinner/Spinner';
+
 import './SinglePost.sass';
 
 class SinglePost extends Component {
@@ -43,7 +45,7 @@ class SinglePost extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.error.error === 'Post not found') {
       this.props.history.replace('/error');
-    } else if (nextProps.posts.post) {
+    } else if (JSON.stringify(nextProps.posts.post) !== '{}') {
       const { text, avatar, likes, comments, date, header, user, name } = nextProps.posts.post;
       this.setState({
         post: { text, avatar, likes, comments, date, header, postAuthor: user, name }
@@ -99,7 +101,7 @@ class SinglePost extends Component {
         <span className="ally">Edit</span>
       </Link>
     );
-    return (
+    const Post = (
       <>
         <div className="single-post">
           <SinglePostItem post={this.state.post} />
@@ -113,6 +115,8 @@ class SinglePost extends Component {
         <CommentsFeed comments={comments} id={this.props.match.params.id} />
       </>
     );
+
+    return this.props.posts.loading ? <Spinner /> : Post;
   }
 }
 

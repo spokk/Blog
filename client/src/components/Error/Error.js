@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { clearErrors } from '../../actions/postActions';
 
-//clear errors
+import errorImg from './404.jpg';
+
+import './Error.sass';
 
 class Error extends Component {
   componentDidMount() {
     this.props.clearErrors();
   }
   render() {
-    return <div>Error</div>;
+    return (
+      <div className="error">
+        <img className="error__img" src={errorImg} alt="404" />
+        <Link className="error__link" to="/">
+          Back to feed
+        </Link>
+      </div>
+    );
   }
 }
 

@@ -4,6 +4,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUsers } from '../../actions/userActions';
 
+import Spinner from '../Spinner/Spinner';
+
 import './Users.sass';
 
 class Users extends Component {
@@ -21,6 +23,7 @@ class Users extends Component {
     }
   }
   render() {
+    // console.log(this.props.user);
     const usersList = this.state.users.map((user, i) => {
       const { email, avatar, name, _id } = user;
       const defaultAvatar = 'https://bizraise.pro/wp-content/uploads/2014/09/no-avatar-300x300.png';
@@ -39,12 +42,13 @@ class Users extends Component {
         </Link>
       );
     });
-    return (
+    const allUsers = (
       <>
         <h2 className="users__header">All users</h2>
         <div className="users__wrapper">{usersList}</div>
       </>
     );
+    return this.props.user.loading ? <Spinner /> : allUsers;
   }
 }
 
