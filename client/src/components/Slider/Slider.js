@@ -21,8 +21,7 @@ class Slider extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.slider.posts) {
       this.setState({
-        posts: nextProps.slider.posts,
-        slide: parseInt(nextProps.slider.posts.length / 2)
+        posts: nextProps.slider.posts
       });
     }
   }
