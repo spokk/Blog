@@ -1,7 +1,7 @@
 # Blog
 
-##To run project:
-####Go to project folder:
+##To run project: <br />
+####Go to project folder: <br />
 `npm i` <br />
 `cd client` <br />
 `npm i` <br />
