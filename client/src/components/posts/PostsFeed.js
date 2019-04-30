@@ -47,7 +47,7 @@ class PostsFeed extends Component {
     const { posts } = this.state;
     const { loading } = this.props.posts;
     const postsFeed = posts.map((post, i) => <PostItem post={post} key={i} />);
-    const emptyMsg = <h4 className="posts__empty">Sorry, no posts have found. Write your own!</h4>;
+    const emptyMsg = <h3 className="posts__empty">Sorry, no posts have found. Write your own!</h3>;
     const showMoreBtn = (
       <div>
         <button onClick={this.showMore} className="posts__show-more button--round">

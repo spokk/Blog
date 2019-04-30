@@ -51,7 +51,6 @@ router.get('/search', (req, res) => {
 // @desc Get post by id
 // @access Public
 router.get('/post/:id', (req, res) => {
-  console.log(1132);
   Post.findById(req.params.id)
     .then(post => res.json(post))
     .catch(err => res.status(404).json({ error: 'Post not found' }));
@@ -61,7 +60,6 @@ router.get('/post/:id', (req, res) => {
 // @desc Delete post by id
 // @access Private
 router.delete('/post/:id', checkAuth, (req, res) => {
-  console.log(113);
   Post.findById(req.params.id)
     .then(post => {
       if (post.user.toString() === req.user.id || req.user.role === 'admin') {
@@ -77,7 +75,6 @@ router.delete('/post/:id', checkAuth, (req, res) => {
 // @desc Edit post by id
 // @access Private
 router.post('/edit/:id', checkAuth, (req, res) => {
-  console.log(113e2);
   const { errors, isValid } = validatePostInput(req.body);
 
   // Check validation
