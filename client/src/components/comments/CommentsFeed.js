@@ -13,7 +13,7 @@ class CommentsFeed extends Component {
     id: ''
   };
   onDelete = e => {
-    const commentid = e.target.getAttribute('commentid');
+    const commentid = e.currentTarget.getAttribute('commentid');
     this.props.deleteComment(this.props.id, commentid);
   };
   componentWillReceiveProps(nextProps) {
@@ -32,7 +32,7 @@ class CommentsFeed extends Component {
   render() {
     const defaultAvatar = 'https://bizraise.pro/wp-content/uploads/2014/09/no-avatar-300x300.png';
 
-    const comments = this.state.comments.map((comment, i) => {
+    const comments = this.props.comments.map((comment, i) => {
       const time = new Date(comment.date);
       const commentDate = (
         <>
@@ -56,7 +56,7 @@ class CommentsFeed extends Component {
             <p className="comment__comment">{comment.text}</p>
           </div>
 
-          {this.state.isAuth && comment.user === this.state.id && (
+          {this.props.auth.isAuth && comment.user === this.props.auth.user.id && (
             <button
               className="button--round comment__delete-btn"
               onClick={this.onDelete}

@@ -13,7 +13,16 @@ import {
 } from '../actions/types';
 const initialState = {
   posts: [],
-  post: {},
+  post: {
+    name: '',
+    text: '',
+    avatar: '',
+    likes: [],
+    comments: [],
+    date: '',
+    header: '',
+    postAuthor: ''
+  },
   loading: false
 };
 
@@ -72,7 +81,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         posts: [],
-        post: {},
+        post: {
+          name: '',
+          text: '',
+          avatar: '',
+          likes: [],
+          comments: [],
+          date: '',
+          header: '',
+          postAuthor: ''
+        },
         loading: false
       };
     default:

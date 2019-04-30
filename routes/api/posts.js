@@ -13,7 +13,6 @@ const validateCommentInput = require('../../validation/comment');
 // @desc Create post
 // @access Private
 router.post('/', checkAuth, (req, res) => {
-  console.log(1);
   const { errors, isValid } = validatePostInput(req.body);
 
   // Check validation
@@ -47,7 +46,7 @@ router.get('/search', (req, res) => {
     .catch(err => res.status(404).json({ error: 'Something went wrong ... ' }));
 });
 
-// @route GET api/posts/:id
+// @route GET api/posts/post/:id
 // @desc Get post by id
 // @access Public
 router.get('/post/:id', (req, res) => {
@@ -56,7 +55,7 @@ router.get('/post/:id', (req, res) => {
     .catch(err => res.status(404).json({ error: 'Post not found' }));
 });
 
-// @route DELETE api/posts/:id
+// @route DELETE api/posts/post/:id
 // @desc Delete post by id
 // @access Private
 router.delete('/post/:id', checkAuth, (req, res) => {
