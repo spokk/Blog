@@ -9,29 +9,11 @@ const User = require('../../models/User');
 const validatePostInput = require('../../validation/post');
 const validateCommentInput = require('../../validation/comment');
 
-// @route GET api/posts/test
-// @desc Tests posts route
-// @access Public
-router.get('/test', (req, res) => res.json({ response: 'Posts works' }));
-
-// @route GET api/posts
-// @desc Get all posts
-// @access Public
-router.get('/page/:page', (req, res) => {
-  let page = parseInt(req.params.page);
-  let skip = 6 * (page - 1);
-  Post.find()
-    .sort({ date: -1 })
-    .limit(6)
-    .skip(skip)
-    .then(posts => res.json(posts))
-    .catch(err => res.status(404).json({ posts: 'Posts not found' }));
-});
-
 // @route POST api/posts
 // @desc Create post
 // @access Private
 router.post('/', checkAuth, (req, res) => {
+  console.log(1);
   const { errors, isValid } = validatePostInput(req.body);
 
   // Check validation
@@ -50,12 +32,44 @@ router.post('/', checkAuth, (req, res) => {
   newPost.save().then(post => res.json(post));
 });
 
+// @route GET api/posts/search?query=
+// @desc Search posts route
+// @access Public
+router.get('/search', (req, res) => {
+  Post.find({ $text: { $search: req.query.query } })
+    .limit(10)
+    .then(response => {
+      if (response.length === 0) {
+        return res.status(404).json({ error: 'Nothing ... try something else' });
+      }
+      return res.json(response);
+    })
+    .catch(err => res.status(404).json({ error: 'Something went wrong ... ' }));
+});
+
 // @route GET api/posts/:id
 // @desc Get post by id
 // @access Public
-router.get('/:id', (req, res) => {
+router.get('/post/:id', (req, res) => {
+  console.log(1132);
   Post.findById(req.params.id)
     .then(post => res.json(post))
+    .catch(err => res.status(404).json({ error: 'Post not found' }));
+});
+
+// @route DELETE api/posts/:id
+// @desc Delete post by id
+// @access Private
+router.delete('/post/:id', checkAuth, (req, res) => {
+  console.log(113);
+  Post.findById(req.params.id)
+    .then(post => {
+      if (post.user.toString() === req.user.id || req.user.role === 'admin') {
+        // Delete post
+        return post.remove().then(() => res.json({ success: true }));
+      }
+      return res.status(401).json({ error: 'No authorized' });
+    })
     .catch(err => res.status(404).json({ error: 'Post not found' }));
 });
 
@@ -63,6 +77,7 @@ router.get('/:id', (req, res) => {
 // @desc Edit post by id
 // @access Private
 router.post('/edit/:id', checkAuth, (req, res) => {
+  console.log(113e2);
   const { errors, isValid } = validatePostInput(req.body);
 
   // Check validation
@@ -86,34 +101,18 @@ router.post('/edit/:id', checkAuth, (req, res) => {
   });
 });
 
-// @route GET api/posts/search?query=
-// @desc Search posts route
+// @route GET api/posts
+// @desc Get all posts
 // @access Public
-router.get('/search', (req, res) => {
-  Post.find({ $text: { $search: req.query.query } })
-    .limit(10)
-    .then(response => {
-      if (response.length === 0) {
-        return res.status(404).json({ error: 'Nothing ... try something else' });
-      }
-      return res.json(response);
-    })
-    .catch(err => res.status(404).json({ error: 'Something went wrong ... ' }));
-});
-
-// @route DELETE api/posts/:id
-// @desc Delete post by id
-// @access Private
-router.delete('/:id', checkAuth, (req, res) => {
-  Post.findById(req.params.id)
-    .then(post => {
-      if (post.user.toString() === req.user.id || req.user.role === 'admin') {
-        // Delete post
-        return post.remove().then(() => res.json({ success: true }));
-      }
-      return res.status(401).json({ error: 'No authorized' });
-    })
-    .catch(err => res.status(404).json({ error: 'Post not found' }));
+router.get('/page/:page', (req, res) => {
+  let page = parseInt(req.params.page);
+  let skip = 6 * (page - 1);
+  Post.find()
+    .sort({ date: -1 })
+    .limit(6)
+    .skip(skip)
+    .then(posts => res.json(posts))
+    .catch(err => res.status(404).json({ posts: 'Posts not found' }));
 });
 
 // @route POST api/posts/like/:id

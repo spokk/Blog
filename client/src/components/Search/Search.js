@@ -6,6 +6,8 @@ import { searchPosts } from '../../actions/searchActions';
 
 import PostItem from '../posts/PostItem';
 
+import './Search.sass';
+
 class Search extends Component {
   state = {
     response: []
@@ -23,7 +25,10 @@ class Search extends Component {
   }
   render() {
     const searchFeed = this.state.response.map((post, i) => <PostItem post={post} key={i} />);
-    return this.state.response.length > 0 ? <div className="posts__wrapper">{searchFeed}</div> : <p>Empty</p>;
+    const empty = <h3 className="empty">Nothing... try somwthing else</h3>;
+    const response =
+      this.state.response.length > 0 ? <div className="posts__wrapper">{searchFeed}</div> : empty;
+    return response;
   }
 }
 

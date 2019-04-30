@@ -40,7 +40,7 @@ export const getPosts = page => dispatch => {
 export const getPostById = id => dispatch => {
   dispatch({ type: SET_LOADING });
   axios
-    .get(`/api/posts/${id}`)
+    .get(`/api/posts/post/${id}`)
     .then(res =>
       dispatch({
         type: GET_POST,
@@ -59,7 +59,7 @@ export const getPostById = id => dispatch => {
 //Delete post
 export const deletePostById = (id, history) => dispatch => {
   axios
-    .delete(`/api/posts/${id}`)
+    .delete(`/api/posts/post/${id}`)
     .then(res => {
       dispatch({
         type: DELETE_POST
