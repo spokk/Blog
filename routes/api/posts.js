@@ -50,6 +50,15 @@ router.post('/', checkAuth, (req, res) => {
   newPost.save().then(post => res.json(post));
 });
 
+// @route GET api/posts/:id
+// @desc Get post by id
+// @access Public
+router.get('/:id', (req, res) => {
+  Post.findById(req.params.id)
+    .then(post => res.json(post))
+    .catch(err => res.status(404).json({ error: 'Post not found' }));
+});
+
 // @route POST api/posts/edit/:id
 // @desc Edit post by id
 // @access Private
@@ -90,15 +99,6 @@ router.get('/search', (req, res) => {
       return res.json(response);
     })
     .catch(err => res.status(404).json({ error: 'Something went wrong ... ' }));
-});
-
-// @route GET api/posts/:id
-// @desc Get post by id
-// @access Public
-router.get('/:id', (req, res) => {
-  Post.findById(req.params.id)
-    .then(post => res.json(post))
-    .catch(err => res.status(404).json({ error: 'Post not found' }));
 });
 
 // @route DELETE api/posts/:id
