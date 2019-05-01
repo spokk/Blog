@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteComment } from '../../actions/postActions';
 
@@ -48,7 +48,9 @@ class CommentsFeed extends Component {
               alt="avatar"
             />
             <div className="comment__author">
-              <p className="comment__name">{comment.name}</p>
+              <Link className="comment__name" to={`/user/${comment.user}`}>
+                {comment.name}
+              </Link>
               <p className="comment__date">{commentDate}</p>
             </div>
           </div>
