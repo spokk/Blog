@@ -10,5 +10,5 @@
 `cd ..` <br />
 `npm run dev` <br />
 
-if you have problems. check your npm version, should be at leat 6.9.0
+if you have problem. check your npm version, should be at least 6.9.0
 `npm i npm@6.9.0 -g`
