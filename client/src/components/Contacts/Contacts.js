@@ -6,10 +6,10 @@ import './Contacts.sass';
 class Contacts extends Component {
   static defaultProps = {
     center: {
-      lat: 50.42825354,
-      lng: -329.5238775
+      lat: 50.428543,
+      lng: 30.476327
     },
-    zoom: 18
+    zoom: 16
   };
 
   render() {
@@ -35,7 +35,7 @@ class Contacts extends Component {
         <div className="contacts__map-wrapper">
           <GoogleMapReact
             className="contacts__map"
-            bootstrapURLKeys={{ key: 'AIzaSyDxK9QeYSK0YQf8J1CrkQgjvB5uqizksz0' }}
+            bootstrapURLKeys={{ key: 'AIzaSyCkObuPXoQzi1CAxji9e8JO4AklhvV2Edk' }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
           />
